@@ -9,17 +9,24 @@
   --font-lobster: "Lobster_Two", sans-serif;
 
   /* colors */
-  --color-white: #fbfef9;
-  --color-black: #040403;
-  --color-iris: #5f4bb6;
-  --color-celestial: #009ddc;
-  --color-folly: #ff1654;
+  --color-white: #f6fff8;
+  --color-black: #08090a;
+  --color-caribbean: #216869;
+  --color-dodger: #0197f6;
+  --color-crimson: #d7263d;
 }
 
 @layer base {
   body {
     @apply font-quicksand text-black bg-white;
   }
+}
+
+.font-stroke {
+  color: white;
+  background-color: white;
+  text-shadow: -1px -1px 0 #216869, 1px -1px 0 #216869, -1px 1px 0 #216869,
+    1px 1px 0 #216869;
 }
 
 @theme inline {

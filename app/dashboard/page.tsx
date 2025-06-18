@@ -1,7 +1,8 @@
 import { redirect } from "next/navigation";
 
 function DashboardPage() {
-  redirect("/dashboard/teams");
+  // ! chech if user is logged
+  redirect("/dashboard/overview");
 
   return <></>;
 }

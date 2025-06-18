@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
-import DashboardNavbar from "@/components/dashboard/DashboardNavbar";
-import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
-import DashboardWrapper from "@/components/dashboard/DashboardWrapper";
+import DashboardSidebar from "@/components/app/dashboard/DashboardSidebar";
+import DashboardWrapper from "@/components/app/dashboard/DashboardWrapper";
 
 interface Props {
   children: ReactNode;
@@ -10,12 +9,18 @@ interface Props {
 function DashboardLayout({ children }: Props) {
   return (
     <DashboardWrapper>
-      <DashboardNavbar />
-      <div className="h-[calc(100%-64px)] grid grid-cols-12">
-        <DashboardSidebar />
+      <div className="h-full w-full grid grid-cols-12">
+        {/* SIDEBAR */}
+        <div className="col-span-2 p-4 bg-caribbean text-white overflow-hidden">
+          <DashboardSidebar />
+        </div>
 
         {/* MAIN */}
-        <main className="col-span-10 col-start-3">{children}</main>
+        <div className="h-full w-full col-span-10 col-start-3 py-4 pr-4 bg-caribbean">
+          <main className="h-full bg-white rounded-lg">
+            <div className="overflow-y-auto">{children}</div>
+          </main>
+        </div>
       </div>
     </DashboardWrapper>
   );

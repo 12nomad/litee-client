@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Quicksand, Lobster_Two } from "next/font/google";
 
 import "./globals.css";
+import RQProvider from "@/features/react-query/RQProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const quicksand = Quicksand({
   variable: "--font-quicksand",
@@ -16,7 +18,7 @@ const lobster = Lobster_Two({
 
 // TODO: SEO, Favicons
 export const metadata: Metadata = {
-  title: "Litee | Project Management Tool",
+  title: "LiteeFin. | Finance Management",
 };
 
 export default function RootLayout({
@@ -27,7 +29,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${quicksand.variable} ${lobster.variable} antialiased`}>
-        {children}
+        <RQProvider>{children}</RQProvider>
+        <Toaster
+          position="top-center"
+          toastOptions={{
+            classNames: {
+              toast: "!bg-white",
+              success: "!text-caribbean",
+              error: "!text-crimson",
+              title: "!mx-auto !px-auto",
+            },
+          }}
+        />
       </body>
     </html>
   );
