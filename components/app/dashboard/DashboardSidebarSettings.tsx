@@ -11,8 +11,8 @@ import {
   DropdownMenuItem,
   DropdownMenuShortcut,
 } from "@/components/ui/dropdown-menu";
-import { useUserStore } from "@/features/stores/user.store";
-import useLogoutMutation from "@/lib/app/authentication/logout/useLogout";
+import { useUserStore } from "@/lib/stores/user.store";
+import useLogoutMutation from "@/features/app/authentication/logout/useLogout";
 import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
 
 function DashboardSidebarSettings() {

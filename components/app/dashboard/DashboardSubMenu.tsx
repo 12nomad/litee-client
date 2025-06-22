@@ -9,6 +9,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion";
+import { cn } from "@/lib/utils";
 
 interface Props {
   type: "accounts" | "categories";
@@ -23,12 +24,14 @@ interface Props {
 function DashboardSubMenu({ data, title, type }: Props) {
   const pathname = usePathname();
 
-  const getClassName = (value: string) => {
-    return pathname === `/dashboard/categories/${value}` ||
-      pathname === `/dashboard/accounts/${value}`
-      ? "relative flex items-center gap-2 h-8 text-white bg-white/10 rounded-r-xs before:content-[''] before:w-1 before:h-8 before:bg-white before:rounded-xs before:block before:relative"
-      : "flex items-center gap-2 h-8 text-white/60";
-  };
+  const getClassName = (value: string) =>
+    cn(
+      "flex items-center gap-2 h-8",
+      pathname === `/dashboard/categories/${value}` ||
+        pathname === `/dashboard/accounts/${value}`
+        ? "relative text-white bg-white/10 rounded-r-xs before:content-[''] before:w-1 before:h-8 before:bg-white before:rounded-xs before:block before:relative"
+        : "text-white/60"
+    );
 
   return (
     <div className="mx-4">

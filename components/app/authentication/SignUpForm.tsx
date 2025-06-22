@@ -5,8 +5,8 @@ import { Controller, useForm } from "react-hook-form";
 import {
   SignUpFormValues,
   signUpSchema,
-} from "@/lib/app/authentication/sign-up/sign-up.schema";
-import useSignUpMutation from "@/lib/app/authentication/sign-up/useSignUp.mutation";
+} from "@/features/app/authentication/sign-up/sign-up.schema";
+import useSignUpMutation from "@/features/app/authentication/sign-up/useSignUp.mutation";
 import Button from "@/components/app/shared/Button";
 import Input from "@/components/app/shared/Input";
 import ErrorMessages from "@/components/app/shared/ErrorMessages";

@@ -1,7 +1,7 @@
 "use client";
 
-import { useUserStore } from "@/features/stores/user.store";
-import useGetAuthenticatedUser from "@/lib/app/authentication/get-authenticated-user/useGetAuthenticatedUser";
+import { useUserStore } from "@/lib/stores/user.store";
+import useGetAuthenticatedUser from "@/features/app/authentication/get-authenticated-user/useGetAuthenticatedUser";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 

@@ -1,7 +1,7 @@
-import { User } from "@/features/stores/user.store";
-import { axiosInstance } from "@/lib/axios-instance";
-import { endpoints } from "@/lib/endpoints";
-import { QueryKeys } from "@/lib/query-keys";
+import { User } from "@/lib/stores/user.store";
+import { axiosInstance } from "@/features/axios-instance";
+import { endpoints } from "@/features/endpoints";
+import { QueryKeys } from "@/features/query-keys";
 import { useQuery } from "@tanstack/react-query";
 
 const getAuthenticatedUser = async () => {

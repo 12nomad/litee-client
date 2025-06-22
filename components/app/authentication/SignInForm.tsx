@@ -5,8 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   signInSchema,
   SignInFormValues,
-} from "@/lib/app/authentication/sign-in/sign-in.schema";
-import useSignInMutation from "@/lib/app/authentication/sign-in/useSignIn.mutation";
+} from "@/features/app/authentication/sign-in/sign-in.schema";
+import useSignInMutation from "@/features/app/authentication/sign-in/useSignIn.mutation";
 import Button from "@/components/app/shared/Button";
 import Input from "@/components/app/shared/Input";
 import ErrorMessages from "@/components/app/shared/ErrorMessages";

@@ -1,6 +1,6 @@
 "use client";
 
-import getQueryClient from "@/features/react-query/RQClient";
+import getQueryClient from "@/lib/react-query/RQClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode } from "react";
 

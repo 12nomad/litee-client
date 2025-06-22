@@ -1,6 +1,6 @@
-import { UserStorageKey } from "@/features/stores/user.store";
-import { axiosInstance } from "@/lib/axios-instance";
-import { endpoints } from "@/lib/endpoints";
+import { UserStorageKey } from "@/lib/stores/user.store";
+import { axiosInstance } from "@/features/axios-instance";
+import { endpoints } from "@/features/endpoints";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { redirect } from "next/navigation";

@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface Props {
   data: {
@@ -15,11 +16,13 @@ interface Props {
 function DashboardMainMenu({ data }: Props) {
   const pathname = usePathname();
 
-  const getClassName = (menuLabel: string) => {
-    return pathname === `/dashboard/${menuLabel}`
-      ? "relative flex items-center gap-2 h-8 text-white bg-white/10 rounded-r-xs before:content-[''] before:w-1 before:h-8 before:bg-white before:rounded-xs before:block"
-      : "flex items-center gap-2 h-8 text-white/60";
-  };
+  const getClassName = (menuLabel: string) =>
+    cn(
+      "flex items-center gap-2 h-8",
+      pathname === `/dashboard/${menuLabel}`
+        ? "relative text-white bg-white/10 rounded-r-xs before:content-[''] before:w-1 before:h-8 before:bg-white before:rounded-xs before:block"
+        : "text-white/60"
+    );
 
   return (
     <div className="px-4 space-y-2">
