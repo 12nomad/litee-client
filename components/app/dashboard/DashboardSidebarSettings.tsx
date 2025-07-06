@@ -17,7 +17,7 @@ import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
 
 function DashboardSidebarSettings() {
   const { user } = useUserStore();
-  const { mutateAsync } = useLogoutMutation();
+  const { mutateAsync, isPending } = useLogoutMutation();
 
   const handleLogout = async () => {
     await mutateAsync();
@@ -70,7 +70,7 @@ function DashboardSidebarSettings() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleLogout}>
+            <DropdownMenuItem onClick={handleLogout} disabled={isPending}>
               Log out
               <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
             </DropdownMenuItem>

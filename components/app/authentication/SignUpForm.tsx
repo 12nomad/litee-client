@@ -16,6 +16,7 @@ function SignUpForm() {
     handleSubmit,
     control,
     formState: { errors },
+    reset,
   } = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -25,7 +26,7 @@ function SignUpForm() {
       username: "",
     },
   });
-  const { mutateAsync } = useSignUpMutation();
+  const { mutateAsync, isPending } = useSignUpMutation(reset);
 
   const onSubmit = async (data: SignUpFormValues) => {
     await mutateAsync({
@@ -100,7 +101,7 @@ function SignUpForm() {
       {errors.confirmPassword && (
         <ErrorMessages>{errors.confirmPassword.message}</ErrorMessages>
       )} */}
-      <Button variant="primary" type="submit" fullWidth>
+      <Button variant="primary" type="submit" fullWidth disabled={isPending}>
         <span className="font-bold">Sign up</span>
       </Button>
     </form>

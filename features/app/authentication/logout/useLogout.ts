@@ -19,8 +19,11 @@ const useLogoutMutation = () => {
       redirect("/welcome");
     },
     onError: (error: AxiosError) => {
-      if (error?.response?.data)
-        toast.error(`${error?.response?.data as string}.`);
+      if (
+        error?.response?.data ||
+        (error.message && error.message !== "NEXT_REDIRECT")
+      )
+        toast.error(`${(error?.response?.data as string) || error.message}.`);
     },
   });
 };

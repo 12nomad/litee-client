@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ReactNode } from "react";
 import {
   Accordion,
   AccordionItem,
@@ -10,19 +9,63 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
+import { Wallet } from "lucide-react";
+import useGetAccounts from "@/features/app/accounts/getAccounts/useGetAccounts";
 
-interface Props {
-  type: "accounts" | "categories";
-  title: string;
-  data: {
-    id: number;
-    label: string;
-    icon: ReactNode;
-  }[];
-}
+// const Categories = [
+//   {
+//     id: 100,
+//     label: "Housing",
+//     icon: <HomeIcon className="size-5" />,
+//   },
+//   {
+//     id: 101,
+//     label: "Utilities",
+//     icon: <ShoppingCartIcon className="size-5" />,
+//   },
+//   {
+//     id: 102,
+//     label: "Food",
+//     icon: <CakeIcon className="size-5" />,
+//   },
+//   {
+//     id: 103,
+//     label: "Transportation",
+//     icon: <PaperAirplaneIcon className="size-5" />,
+//   },
+// ];
 
-function DashboardSubMenu({ data, title, type }: Props) {
+// const Accounts = [
+//   {
+//     id: 200,
+//     label: "Account 100",
+//   },
+//   {
+//     id: 201,
+//     label: "Account 101",
+//   },
+//   {
+//     id: 202,
+//     label: "Account 102",
+//   },
+// ];
+
+// interface Props {
+//   type: "accounts" | "categories";
+//   title: string;
+//   data: {
+//     id: number;
+//     label: string;
+//     icon: ReactNode;
+//   }[];
+// }
+
+type TMenu = "accounts" | "categories";
+const type: TMenu = "accounts";
+
+function DashboardSubMenu() {
   const pathname = usePathname();
+  const { data } = useGetAccounts();
 
   const getClassName = (value: string) =>
     cn(
@@ -38,25 +81,25 @@ function DashboardSubMenu({ data, title, type }: Props) {
       <Accordion type="multiple" defaultValue={["item-1"]}>
         <AccordionItem value="item-1">
           <AccordionTrigger className="p-0 m-0 text-xs text-white font-bold cursor-pointer hover:no-underline [&>*]:text-white">
-            {title}
+            Accounts
           </AccordionTrigger>
           <AccordionContent className="p-0 mt-2">
-            {data.map((el) => (
+            {data?.map((el) => (
               <div key={el.id}>
                 <Link
                   href={
                     type === "accounts"
                       ? `/dashboard/accounts/${el.id}`
-                      : `/dashboard/categories/${el.label.toLowerCase()}`
+                      : `/dashboard/categories/${el.name.toLowerCase()}`
                   }
                   className={
                     type === "accounts"
                       ? getClassName(el.id.toString())
-                      : getClassName(el.label.toLowerCase())
+                      : getClassName(el.name.toLowerCase())
                   }
                 >
-                  {el.icon}
-                  <span className="text-sm font-medium">{el.label}</span>
+                  <Wallet className="size-5" />
+                  <span className="text-sm font-medium">{el.name}</span>
                 </Link>
               </div>
             ))}

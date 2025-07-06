@@ -16,6 +16,7 @@ function SignInForm() {
     handleSubmit,
     control,
     formState: { errors },
+    reset,
   } = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -23,7 +24,7 @@ function SignInForm() {
       password: "",
     },
   });
-  const { mutateAsync } = useSignInMutation();
+  const { mutateAsync, isPending } = useSignInMutation(reset);
 
   const onSubmit = async (data: SignInFormValues) => {
     await mutateAsync({ email: data.email, password: data.password });
@@ -62,7 +63,7 @@ function SignInForm() {
       {errors.password && (
         <ErrorMessages>{errors.password.message}</ErrorMessages>
       )}
-      <Button variant="primary" type="submit" fullWidth>
+      <Button variant="primary" type="submit" fullWidth disabled={isPending}>
         <span className="font-bold">Sign in</span>
       </Button>
     </form>

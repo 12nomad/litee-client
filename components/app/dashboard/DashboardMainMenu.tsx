@@ -1,19 +1,47 @@
 "use client";
 
 import Link from "next/link";
-import { ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import {
+  PresentationChartLineIcon,
+  ArrowPathRoundedSquareIcon,
+  CubeTransparentIcon,
+  BellAlertIcon,
+} from "@heroicons/react/24/outline";
 
-interface Props {
-  data: {
-    id: number;
-    label: string;
-    icon: ReactNode;
-  }[];
-}
+const MainMenu = [
+  {
+    id: 1,
+    label: "Overview",
+    icon: <PresentationChartLineIcon className="size-5" />,
+  },
+  {
+    id: 2,
+    label: "Transactions",
+    icon: <ArrowPathRoundedSquareIcon className="size-5" />,
+  },
+  {
+    id: 3,
+    label: "Majula",
+    icon: <CubeTransparentIcon className="size-5" />,
+  },
+  {
+    id: 4,
+    label: "Notifications",
+    icon: <BellAlertIcon className="size-5" />,
+  },
+];
 
-function DashboardMainMenu({ data }: Props) {
+// interface Props {
+//   data: {
+//     id: number;
+//     label: string;
+//     icon: ReactNode;
+//   }[];
+// }
+
+function DashboardMainMenu() {
   const pathname = usePathname();
 
   const getClassName = (menuLabel: string) =>
@@ -28,10 +56,10 @@ function DashboardMainMenu({ data }: Props) {
     <div className="px-4 space-y-2">
       <p className="text-xs text-white font-bold">General</p>
       <ul>
-        {data.map((menu) => (
+        {MainMenu.map((menu) => (
           <Link
             href={`/dashboard/${menu.label.toLowerCase()}`}
-            key={menu.id}
+            key={`${menu.id}-${menu.label}`}
             className={getClassName(menu.label.toLowerCase())}
           >
             {menu.icon}

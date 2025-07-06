@@ -1,14 +1,15 @@
 // components/Button.tsx
-import { ReactNode } from "react";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 
-interface Props {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   type?: "button" | "submit" | "reset";
   size?: "sm" | "md";
-  variant?: "primary" | "secondary" | "base" | "outline";
+  variant?: "primary" | "secondary" | "base" | "outline" | "ghost" | "danger";
   fullWidth?: boolean;
   rounded?: boolean;
   outlined?: boolean;
+  disabled?: boolean;
 }
 
 function Button({
@@ -18,6 +19,8 @@ function Button({
   variant = "base",
   fullWidth = false,
   rounded = false,
+  disabled = false,
+  ...props
 }: Props) {
   return (
     <button
@@ -29,7 +32,13 @@ function Button({
         "text-black bg-transparent border font-bold border-black"
       } ${variant === "base" && "text-white bg-black"} ${
         variant === "primary" && "text-white bg-caribbean"
-      } ${rounded && "rounded-full"}`}
+      } ${variant === "ghost" && "text-black bg-transparent"} ${
+        variant === "danger" && "text-white bg-crimson"
+      } ${rounded && "rounded-full"} ${
+        disabled && "opacity-60 cursor-not-allowed"
+      }
+      `}
+      {...props}
     >
       {children}
     </button>
