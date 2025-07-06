@@ -8,6 +8,8 @@ export const endpoints = {
   accounts: {
     getAll: "/accounts",
     create: "/accounts",
+    delete: "/accounts",
+    update: "/accounts",
   },
   transactions: {
     getAll: "/transactions",

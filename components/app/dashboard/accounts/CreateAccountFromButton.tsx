@@ -7,7 +7,8 @@ import { PlusCircleIcon } from "@heroicons/react/24/outline";
 function CreateAccountFromButton() {
   const { setAction } = useActionStore();
 
-  const handleClick = () => setAction({ isEdit: false, isOpen: true });
+  const handleClick = () =>
+    setAction({ isEdit: false, isOpen: true, editId: null });
 
   return (
     <Button variant="primary" rounded onClick={handleClick}>

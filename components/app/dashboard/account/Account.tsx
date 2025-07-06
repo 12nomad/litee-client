@@ -1,6 +1,7 @@
 "use client";
 
 import { DataColumns } from "@/components/app/dashboard/account/DataColumns";
+import AccountHeader from "@/components/app/dashboard/accounts/AccountHeader";
 import { DataTable } from "@/components/app/shared/DataTable";
 import useGetAccount from "@/features/app/accounts/getAccount/useGetAccount";
 import useBulkDeleteMutation from "@/features/app/transactions/useBulkDeleteTransactions";
@@ -41,9 +42,7 @@ function Account({ accountId }: Props) {
 
   return (
     <div>
-      <h1 className="text-2xl font-medium mb-4">
-        <span className="capitalize">{account?.data.name}</span> account
-      </h1>
+      <AccountHeader accountData={account?.data} />
       <DataTable
         columns={DataColumns}
         data={account?.data.transactions || []}

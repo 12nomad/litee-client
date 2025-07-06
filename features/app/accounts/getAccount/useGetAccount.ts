@@ -15,7 +15,7 @@ const getAccount = async (accountId: string) => {
 const useGetAccount = (accountId: string) => {
   return useQuery<PaginatedData<Account>>({
     queryFn: () => getAccount(accountId),
-    queryKey: [QueryKeys.useGetAccount, accountId],
+    queryKey: [`${QueryKeys.useGetAccount + accountId}`],
   });
 };
 

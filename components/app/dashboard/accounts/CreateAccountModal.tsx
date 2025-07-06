@@ -15,13 +15,14 @@ import {
   createAccountSchema,
 } from "@/features/app/accounts/createAccount/createAccount.schema";
 import useCreateAccountMutation from "@/features/app/accounts/createAccount/useCreateAccount";
+import useUpdateAccountMutation from "@/features/app/accounts/updateAccount/useUpdateAccount";
 import { useActionStore } from "@/lib/stores/action.store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 
 function CreateAccountModal() {
   const {
-    action: { isOpen },
+    action: { isOpen, isEdit, editId },
     resetAction,
   } = useActionStore();
   const {
@@ -35,10 +36,13 @@ function CreateAccountModal() {
       name: "",
     },
   });
-  const { mutateAsync, isPending } = useCreateAccountMutation(reset);
+  const { mutateAsync: createAccount, isPending: isCreateAccountPending } =
+    useCreateAccountMutation(reset);
+  const { mutateAsync: updateAccount, isPending: isUpdateAccountPending } =
+    useUpdateAccountMutation(reset, editId || 0);
 
   const onSubmit = async (data: CreateAccountFormValues) => {
-    await mutateAsync({
+    await (isEdit ? updateAccount : createAccount)({
       name: data.name,
     });
   };
@@ -47,9 +51,13 @@ function CreateAccountModal() {
     <Dialog open={isOpen} onOpenChange={resetAction}>
       <DialogContent className="bg-white">
         <DialogHeader>
-          <DialogTitle className="text-black">New account</DialogTitle>
+          <DialogTitle className="text-black">
+            {isEdit ? "Edit account" : "New account"}
+          </DialogTitle>
           <DialogDescription className="text-black">
-            Create a new account and start tracking your transactions
+            {isEdit
+              ? "Update you account details."
+              : "Create a new account and start tracking your transactions"}
           </DialogDescription>
         </DialogHeader>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
@@ -71,9 +79,11 @@ function CreateAccountModal() {
             variant="primary"
             type="submit"
             fullWidth
-            disabled={isPending}
+            disabled={isCreateAccountPending || isUpdateAccountPending}
           >
-            <span className="font-bold">Create account</span>
+            <span className="font-bold">
+              {isEdit ? "Update account" : "Create account"}
+            </span>
           </Button>
         </form>
       </DialogContent>
