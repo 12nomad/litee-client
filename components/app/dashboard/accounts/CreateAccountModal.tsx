@@ -1,5 +1,6 @@
 "use client";
 
+import { Controller, useForm } from "react-hook-form";
 import Button from "@/components/app/shared/Button";
 import ErrorMessages from "@/components/app/shared/ErrorMessages";
 import Input from "@/components/app/shared/Input";
@@ -15,14 +16,14 @@ import {
   createAccountSchema,
 } from "@/features/app/accounts/createAccount/createAccount.schema";
 import useCreateAccountMutation from "@/features/app/accounts/createAccount/useCreateAccount";
+import { Account } from "@/features/app/accounts/getAccounts/useGetAccounts";
 import useUpdateAccountMutation from "@/features/app/accounts/updateAccount/useUpdateAccount";
 import { useActionStore } from "@/lib/stores/action.store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
 
 function CreateAccountModal() {
   const {
-    action: { isOpen, isEdit, editId },
+    action: { editData, isEdit, isOpen },
     resetAction,
   } = useActionStore();
   const {
@@ -35,11 +36,14 @@ function CreateAccountModal() {
     defaultValues: {
       name: "",
     },
+    values: {
+      name: isEdit ? (editData as Account)?.name : "",
+    },
   });
   const { mutateAsync: createAccount, isPending: isCreateAccountPending } =
     useCreateAccountMutation(reset);
   const { mutateAsync: updateAccount, isPending: isUpdateAccountPending } =
-    useUpdateAccountMutation(reset, editId || 0);
+    useUpdateAccountMutation(reset, (editData as Account)?.id || 0);
 
   const onSubmit = async (data: CreateAccountFormValues) => {
     await (isEdit ? updateAccount : createAccount)({

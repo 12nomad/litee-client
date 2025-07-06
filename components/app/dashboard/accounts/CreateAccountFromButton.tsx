@@ -8,7 +8,7 @@ function CreateAccountFromButton() {
   const { setAction } = useActionStore();
 
   const handleClick = () =>
-    setAction({ isEdit: false, isOpen: true, editId: null });
+    setAction({ isEdit: false, isOpen: true, editData: null });
 
   return (
     <Button variant="primary" rounded onClick={handleClick}>

@@ -3,7 +3,7 @@ import { create } from "zustand";
 interface Action {
   isOpen: boolean;
   isEdit: boolean;
-  editId: number | null;
+  editData: unknown | null;
 }
 
 interface ActionStore {
@@ -18,16 +18,16 @@ export const useActionStore = create<ActionStore>()((set) => ({
   action: {
     isOpen: false,
     isEdit: false,
-    editId: null,
+    editData: null,
   },
   setAction: (action) =>
     set({
       action: {
         isOpen: action.isOpen,
         isEdit: action.isEdit,
-        editId: action.editId,
+        editData: action.editData,
       },
     }),
   resetAction: () =>
-    set({ action: { isOpen: false, isEdit: false, editId: null } }),
+    set({ action: { isOpen: false, isEdit: false, editData: null } }),
 }));

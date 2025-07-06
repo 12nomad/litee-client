@@ -24,7 +24,11 @@ function AccountHeader({ accountData }: Props) {
   const { setAction } = useActionStore();
 
   const handleEdit = () => {
-    setAction({ isOpen: true, isEdit: true, editId: accountData?.id || null });
+    setAction({
+      isOpen: true,
+      isEdit: true,
+      editData: accountData || null,
+    });
   };
 
   const handleDelete = async () => {
@@ -38,9 +42,7 @@ function AccountHeader({ accountData }: Props) {
     <header className="flex justify-between items-center mb-6">
       <ConfirmDialog />
       <CreateAccountModal />
-      <h1 className="text-2xl font-medium mb-4">
-        <span className="capitalize">{accountData?.name}</span> Account
-      </h1>
+      <h1 className="text-2xl font-medium mb-4">{accountData?.name} Account</h1>
       <div className="flex items-center gap-2">
         <Button variant="primary" rounded onClick={handleEdit}>
           <PencilSquareIcon className="size-5" />

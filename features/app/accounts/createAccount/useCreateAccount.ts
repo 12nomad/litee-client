@@ -1,9 +1,11 @@
+import { Account } from "@/features/app/accounts/getAccounts/useGetAccounts";
 import { axiosInstance } from "@/features/axios-instance";
 import { endpoints } from "@/features/endpoints";
 import { QueryKeys } from "@/features/query-keys";
 import { useActionStore } from "@/lib/stores/action.store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import { redirect } from "next/navigation";
 import { UseFormReset } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -25,13 +27,14 @@ const useCreateAccountMutation = (reset: UseFormReset<ICreateAccountDto>) => {
 
   return useMutation({
     mutationFn: createAccount,
-    onSuccess: () => {
+    onSuccess: (data: Account) => {
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetAccounts],
       });
       toast.success(`Account created successfully.`);
       reset();
       resetAction();
+      redirect("/dashboard/accounts/" + data.id);
     },
     onError: (error: AxiosError) => {
       if (
