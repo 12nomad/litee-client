@@ -1,12 +1,13 @@
 "use client";
 
-import Button from "@/components/app/shared/Button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Transaction } from "@/features/app/transactions/useGetTransactions";
-import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 import { ColumnDef } from "@tanstack/react-table";
+import { Checkbox } from "@/components/ui/checkbox";
+import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
+import { Transaction } from "@/features/app/transactions/getTransactions/useGetTransactions";
+import Button from "@/components/app/shared/Button";
+import Actions from "@/components/app/dashboard/account/Actions";
 
-export const DataColumns: ColumnDef<Transaction>[] = [
+export const dataColumns: ColumnDef<Transaction>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -29,21 +30,37 @@ export const DataColumns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "description",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Description
-          <ArrowsUpDownIcon className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: "Description",
   },
   {
     accessorKey: "amount",
-    header: "Amount",
+    header: ({ column }) => {
+      return (
+        <div className="-ml-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Amount
+            <ArrowsUpDownIcon className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("amount"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(amount);
+
+      return <div>{formatted}</div>;
+    },
+  },
+  {
+    accessorKey: "actions",
+    header: "Actions",
+    cell: ({ row }) => <Actions row={row} />,
   },
 ];

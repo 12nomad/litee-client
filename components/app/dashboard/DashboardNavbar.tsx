@@ -36,7 +36,7 @@ function DashboardNavbar() {
               <div className="w-[1px] h-5 bg-black/10 rounded-lg" />
             </li>
             <li>
-              <DropdownMenu>
+              <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild className="cursor-pointer">
                   <Avatar className="w-8 h-8">
                     <AvatarImage src="not-found.png" />

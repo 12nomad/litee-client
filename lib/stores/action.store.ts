@@ -1,24 +1,26 @@
 import { create } from "zustand";
 
-interface Action {
+export interface Action<T> {
   isOpen: boolean;
   isEdit: boolean;
-  editData: unknown | null;
+  editData: T | null;
+  modalId: string | null;
 }
 
-interface ActionStore {
-  action: Action;
-  setAction: (action: Action) => void;
+export interface ActionStore<T> {
+  action: Action<T>;
+  setAction: <T>(action: Action<T>) => void;
   resetAction: () => void;
 }
 
 export const ActionStorageKey = "action-storage";
 
-export const useActionStore = create<ActionStore>()((set) => ({
+export const useActionStore = create<ActionStore<unknown>>()((set) => ({
   action: {
     isOpen: false,
     isEdit: false,
     editData: null,
+    modalId: null,
   },
   setAction: (action) =>
     set({
@@ -26,8 +28,16 @@ export const useActionStore = create<ActionStore>()((set) => ({
         isOpen: action.isOpen,
         isEdit: action.isEdit,
         editData: action.editData,
+        modalId: action.modalId,
       },
     }),
   resetAction: () =>
-    set({ action: { isOpen: false, isEdit: false, editData: null } }),
+    set({
+      action: {
+        isOpen: false,
+        isEdit: false,
+        editData: null,
+        modalId: null,
+      },
+    }),
 }));

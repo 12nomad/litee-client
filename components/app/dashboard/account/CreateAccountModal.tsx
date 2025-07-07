@@ -1,9 +1,10 @@
 "use client";
 
 import { Controller, useForm } from "react-hook-form";
-import Button from "@/components/app/shared/Button";
-import ErrorMessages from "@/components/app/shared/ErrorMessages";
-import Input from "@/components/app/shared/Input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Account } from "@/features/app/accounts/getAccounts/useGetAccounts";
+import { useActionStore } from "@/lib/stores/action.store";
+import { TypedActionStore } from "@/features/interfaces/TypedActionStore";
 import {
   Dialog,
   DialogContent,
@@ -15,17 +16,18 @@ import {
   CreateAccountFormValues,
   createAccountSchema,
 } from "@/features/app/accounts/createAccount/createAccount.schema";
+import Button from "@/components/app/shared/Button";
+import ErrorMessages from "@/components/app/shared/ErrorMessages";
+import Input from "@/components/app/shared/Input";
 import useCreateAccountMutation from "@/features/app/accounts/createAccount/useCreateAccount";
-import { Account } from "@/features/app/accounts/getAccounts/useGetAccounts";
 import useUpdateAccountMutation from "@/features/app/accounts/updateAccount/useUpdateAccount";
-import { useActionStore } from "@/lib/stores/action.store";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { MODAL_IDS } from "@/features/constants/modals";
 
 function CreateAccountModal() {
   const {
-    action: { editData, isEdit, isOpen },
+    action: { editData, isEdit, isOpen, modalId },
     resetAction,
-  } = useActionStore();
+  } = useActionStore() as TypedActionStore<Account>;
   const {
     handleSubmit,
     control,
@@ -37,13 +39,13 @@ function CreateAccountModal() {
       name: "",
     },
     values: {
-      name: isEdit ? (editData as Account)?.name : "",
+      name: isEdit ? editData!.name : "",
     },
   });
   const { mutateAsync: createAccount, isPending: isCreateAccountPending } =
     useCreateAccountMutation(reset);
   const { mutateAsync: updateAccount, isPending: isUpdateAccountPending } =
-    useUpdateAccountMutation(reset, (editData as Account)?.id || 0);
+    useUpdateAccountMutation(reset, editData?.id || 0);
 
   const onSubmit = async (data: CreateAccountFormValues) => {
     await (isEdit ? updateAccount : createAccount)({
@@ -52,7 +54,10 @@ function CreateAccountModal() {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={resetAction}>
+    <Dialog
+      open={isOpen && modalId === MODAL_IDS.CREATE_ACCOUNT}
+      onOpenChange={resetAction}
+    >
       <DialogContent className="bg-white">
         <DialogHeader>
           <DialogTitle className="text-black">

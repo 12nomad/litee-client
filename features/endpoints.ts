@@ -14,6 +14,8 @@ export const endpoints = {
   transactions: {
     getAll: "/transactions",
     create: "/transactions",
+    delete: "/transactions",
+    update: "/transactions",
     bulkDelete: "/transactions/bulk-delete",
   },
 };

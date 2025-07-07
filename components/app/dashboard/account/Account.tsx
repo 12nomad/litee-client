@@ -1,11 +1,11 @@
 "use client";
 
-import { DataColumns } from "@/components/app/dashboard/account/DataColumns";
-import AccountHeader from "@/components/app/dashboard/accounts/AccountHeader";
+import { dataColumns } from "@/components/app/dashboard/account/DataColumns";
+import AccountHeader from "@/components/app/dashboard/account/AccountHeader";
 import { DataTable } from "@/components/app/shared/DataTable";
 import useGetAccount from "@/features/app/accounts/getAccount/useGetAccount";
-import useBulkDeleteMutation from "@/features/app/transactions/useBulkDeleteTransactions";
-import { Transaction } from "@/features/app/transactions/useGetTransactions";
+import useBulkDeleteMutation from "@/features/app/transactions/bulk-delete/useBulkDeleteTransactions";
+import { Transaction } from "@/features/app/transactions/getTransactions/useGetTransactions";
 import { Row } from "@tanstack/react-table";
 
 interface Props {
@@ -31,7 +31,7 @@ function Account({ accountId }: Props) {
   console.log("accountId :", accountId);
 
   const { data: account, isLoading } = useGetAccount(accountId);
-  const { mutateAsync, isPending } = useBulkDeleteMutation();
+  const { mutateAsync, isPending } = useBulkDeleteMutation(accountId);
 
   if (isLoading) return <p>loading...</p>;
 
@@ -44,7 +44,7 @@ function Account({ accountId }: Props) {
     <div>
       <AccountHeader accountData={account?.data} />
       <DataTable
-        columns={DataColumns}
+        columns={dataColumns}
         data={account?.data.transactions || []}
         filterKey="description"
         handleRowsDelete={handleRowsDelete}

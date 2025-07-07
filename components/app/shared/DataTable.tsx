@@ -26,6 +26,8 @@ import Button from "@/components/app/shared/Button";
 import Input from "@/components/app/shared/Input";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import useConfirm from "@/features/hooks/useConfirm";
+import CreateTransactionFromButton from "@/components/app/dashboard/transactions/CreateTransactionFromButton";
+import CreateTransactionModal from "@/components/app/dashboard/transactions/CreateTransactionModal";
 
 type Filters = "description";
 
@@ -74,15 +76,17 @@ export function DataTable<TData, TValue>({
     const canProceed = await confirm();
     if (!canProceed) return;
 
-    handleRowsDelete(table.getFilteredSelectedRowModel().rows);
+    await handleRowsDelete(table.getFilteredSelectedRowModel().rows);
     table.resetRowSelection();
   };
 
   return (
     <div>
       <ConfirmDialog />
+      <CreateTransactionModal />
       <div className="flex items-center justify-between py-4">
         <Input
+          type="search"
           name="filter"
           placeholder={`Filter ${filterKey}...`}
           value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
@@ -90,6 +94,7 @@ export function DataTable<TData, TValue>({
             table.getColumn(filterKey)?.setFilterValue(event.target.value)
           }
         />
+        <CreateTransactionFromButton />
       </div>
       <div className="rounded-md border">
         <Table className="border rounded-md overflow-hidden">

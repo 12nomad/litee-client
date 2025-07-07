@@ -1,6 +1,6 @@
 "use client";
 
-import CreateAccountFromButton from "@/components/app/dashboard/accounts/CreateAccountFromButton";
+import CreateAccountFromButton from "@/components/app/dashboard/account/CreateAccountFromButton";
 import { useUserStore } from "@/lib/stores/user.store";
 
 function OverviewHeader() {

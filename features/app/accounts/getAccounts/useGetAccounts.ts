@@ -1,4 +1,4 @@
-import { Transaction } from "@/features/app/transactions/useGetTransactions";
+import { Transaction } from "@/features/app/transactions/getTransactions/useGetTransactions";
 import { axiosInstance } from "@/features/axios-instance";
 import { endpoints } from "@/features/endpoints";
 import { QueryKeys } from "@/features/query-keys";

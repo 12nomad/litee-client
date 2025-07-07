@@ -1,39 +1,42 @@
-import { CreateAccountFormValues } from "@/features/app/accounts/createAccount/createAccount.schema";
-import { Account } from "@/features/app/accounts/getAccounts/useGetAccounts";
+import { CreateTransactionFormValues } from "@/features/app/transactions/createTransaction/createTransaction.schema";
+import { Transaction } from "@/features/app/transactions/getTransactions/useGetTransactions";
 import { axiosInstance } from "@/features/axios-instance";
 import { endpoints } from "@/features/endpoints";
 import { QueryKeys } from "@/features/query-keys";
 import { useActionStore } from "@/lib/stores/action.store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { redirect } from "next/navigation";
 import { UseFormReset } from "react-hook-form";
 import { toast } from "sonner";
 
-const createAccount = async (createAccountDto: CreateAccountFormValues) => {
-  const response = await axiosInstance.post(
-    endpoints.accounts.create,
-    createAccountDto
+const editTransaction = async (
+  createTransactionDto: CreateTransactionFormValues,
+  transactionId: number
+) => {
+  const response = await axiosInstance.put(
+    endpoints.transactions.update + `/${transactionId}`,
+    createTransactionDto
   );
   return response.data;
 };
 
-const useCreateAccountMutation = (
-  reset: UseFormReset<CreateAccountFormValues>
+const useUpdateTransactionMutation = (
+  reset: UseFormReset<CreateTransactionFormValues>,
+  transactionId: number
 ) => {
   const queryClient = useQueryClient();
   const { resetAction } = useActionStore();
 
   return useMutation({
-    mutationFn: createAccount,
-    onSuccess: (data: Account) => {
+    mutationFn: (dto: CreateTransactionFormValues) =>
+      editTransaction(dto, transactionId),
+    onSuccess: (data: Transaction) => {
       queryClient.invalidateQueries({
-        queryKey: [QueryKeys.useGetAccounts],
+        queryKey: [`${QueryKeys.useGetAccount + "-" + data.accountId}`],
       });
-      toast.success(`Account created successfully.`);
+      toast.success(`Transaction updated successfully.`);
       reset();
       resetAction();
-      redirect("/dashboard/accounts/" + data.id);
     },
     onError: (error: AxiosError) => {
       if (
@@ -45,4 +48,4 @@ const useCreateAccountMutation = (
   });
 };
 
-export default useCreateAccountMutation;
+export default useUpdateTransactionMutation;

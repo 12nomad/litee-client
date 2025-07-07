@@ -26,7 +26,7 @@ function DashboardSidebarSettings() {
   return (
     <>
       <div className="px-4">
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild className="cursor-pointer">
             <div className="flex items-center justify-between p-4 bg-white/10 rounded-lg">
               <div className="max-w-[80%] flex items-center gap-2">

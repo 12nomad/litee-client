@@ -1,4 +1,4 @@
-import CreateAccountModal from "@/components/app/dashboard/accounts/CreateAccountModal";
+import CreateAccountModal from "@/components/app/dashboard/account/CreateAccountModal";
 import OverviewHeader from "@/components/app/dashboard/overview/OverviewHeader";
 
 function OverviewPage() {

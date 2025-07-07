@@ -1,6 +1,10 @@
 "use client";
 
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import {
+  EyeIcon,
+  EyeSlashIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
 import { InputHTMLAttributes, useState } from "react";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
@@ -61,15 +65,31 @@ function Input({
             )}
           </div>
         </div>
+      ) : type === "search" ? (
+        <div className="relative">
+          <input
+            name={name}
+            type={type}
+            id={inputId}
+            className="block w-full p-2 ps-9 text-black rounded-lg text-sm border border-black focus:outline-caribbean"
+            placeholder={placeholder}
+            {...props}
+          />
+          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <MagnifyingGlassIcon className="size-4 text-black" />
+          </div>
+        </div>
       ) : (
-        <input
-          name={name}
-          type={type}
-          id={inputId}
-          className="block w-full p-2 ps-4 text-black rounded-lg text-sm border border-black focus:outline-caribbean"
-          placeholder={placeholder}
-          {...props}
-        />
+        <div className="relative">
+          <input
+            name={name}
+            type={type}
+            id={inputId}
+            className="block w-full p-2 ps-4 text-black rounded-lg text-sm border border-black focus:outline-caribbean"
+            placeholder={placeholder}
+            {...props}
+          />
+        </div>
       )}
     </div>
   );

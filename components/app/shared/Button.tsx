@@ -31,12 +31,12 @@ function Button({
         variant === "outline" &&
         "text-black bg-transparent border font-bold border-black"
       } ${variant === "base" && "text-white bg-black"} ${
-        variant === "primary" && "text-white bg-caribbean"
-      } ${variant === "ghost" && "text-black bg-transparent"} ${
-        variant === "danger" && "text-white bg-crimson"
-      } ${rounded && "rounded-full"} ${
-        disabled && "opacity-60 cursor-not-allowed"
-      }
+        variant === "secondary" && "text-white bg-dodger"
+      } ${variant === "primary" && "text-white bg-caribbean"} ${
+        variant === "ghost" && "text-black bg-transparent"
+      } ${variant === "danger" && "text-white bg-crimson"} ${
+        rounded && "rounded-full"
+      } ${disabled && "opacity-60 cursor-not-allowed"}
       `}
       {...props}
     >

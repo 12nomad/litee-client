@@ -1,7 +1,7 @@
 import { Account } from "@/features/app/accounts/getAccounts/useGetAccounts";
-import { PaginatedData } from "@/features/app/transactions/useGetTransactions";
 import { axiosInstance } from "@/features/axios-instance";
 import { endpoints } from "@/features/endpoints";
+import { PaginatedData } from "@/features/interfaces/PaginatedData";
 import { QueryKeys } from "@/features/query-keys";
 import { useActionStore } from "@/lib/stores/action.store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -35,7 +35,7 @@ const useUpdateAccountMutation = (
     mutationFn: (dto: ICreateAccountDto) => updateAccount(dto, accountId),
     onSuccess: (data: Account) => {
       queryClient.setQueryData(
-        [`${QueryKeys.useGetAccount + accountId}`],
+        [`${QueryKeys.useGetAccount + "-" + accountId}`],
         (prev: PaginatedData<Account>) => {
           return {
             ...prev,

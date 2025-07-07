@@ -11,14 +11,6 @@ export interface Transaction {
   userId: number;
 }
 
-export interface PaginatedData<T> {
-  currentPage: number;
-  data: T;
-  pageSize: number;
-  totalCount: number;
-  totalPages: number;
-}
-
 const getTransactions = async () => {
   const response = await axiosInstance.get(endpoints.transactions.getAll);
   return response.data;
