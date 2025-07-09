@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import {
   EyeIcon,
   EyeSlashIcon,
@@ -14,6 +15,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   type?: string;
   withForgotPassword?: boolean;
+  borderless?: boolean;
 }
 
 function Input({
@@ -23,6 +25,7 @@ function Input({
   placeholder,
   type = "text",
   withForgotPassword = false,
+  borderless = false,
   ...props
 }: Props) {
   const [showPassword, setShowPassword] = useState(false);
@@ -85,7 +88,10 @@ function Input({
             name={name}
             type={type}
             id={inputId}
-            className="block w-full p-2 ps-4 text-black rounded-lg text-sm border border-black focus:outline-caribbean"
+            className={cn(
+              "block w-full p-2 ps-4 text-black rounded-lg text-sm border-black focus:outline-caribbean",
+              borderless ? "" : "border"
+            )}
             placeholder={placeholder}
             {...props}
           />

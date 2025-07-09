@@ -1,4 +1,4 @@
-import { Account } from "@/features/app/accounts/getAccounts/useGetAccounts";
+import { Category } from "@/features/app/categories/get-categories/useGetCategories";
 import { Transaction } from "@/features/app/transactions/getTransactions/useGetTransactions";
 import { axiosInstance } from "@/features/axios-instance";
 import { endpoints } from "@/features/endpoints";
@@ -10,34 +10,34 @@ import { AxiosError } from "axios";
 import { UseFormReset } from "react-hook-form";
 import { toast } from "sonner";
 
-interface ICreateAccountDto {
+interface ICreateCategoryDto {
   name: string;
 }
 
-const updateAccount = async (
-  createAccountDto: ICreateAccountDto,
-  accountId: number
+const updateCategory = async (
+  createCategoryDto: ICreateCategoryDto,
+  categoryId: number
 ) => {
   const response = await axiosInstance.put(
-    endpoints.accounts.update + `/${accountId}`,
-    createAccountDto
+    endpoints.categories.update + `/${categoryId}`,
+    createCategoryDto
   );
   return response.data;
 };
 
-const useUpdateAccountMutation = (
-  reset: UseFormReset<ICreateAccountDto>,
-  accountId: number
+const useUpdateCategoryMutation = (
+  reset: UseFormReset<ICreateCategoryDto>,
+  categoryId: number
 ) => {
   const queryClient = useQueryClient();
   const { resetAction } = useActionStore();
 
   return useMutation({
-    mutationFn: (dto: ICreateAccountDto) => updateAccount(dto, accountId),
-    onSuccess: (data: Account) => {
+    mutationFn: (dto: ICreateCategoryDto) => updateCategory(dto, categoryId),
+    onSuccess: (data: Category) => {
       queryClient.setQueryData(
-        [`${QueryKeys.useGetAccount + "-" + accountId}`],
-        (prev: PaginatedData<Transaction[], Account>) => {
+        [`${QueryKeys.useGetCategory + "-" + categoryId}`],
+        (prev: PaginatedData<Transaction[], Category>) => {
           return {
             ...prev,
             extra: {
@@ -48,14 +48,14 @@ const useUpdateAccountMutation = (
         }
       );
       queryClient.setQueryData(
-        [QueryKeys.useGetAccounts],
-        (prev: Account[]) => {
+        [QueryKeys.useGetCategories],
+        (prev: Category[]) => {
           return prev.map((a) =>
             a.id === data.id ? { ...a, name: data.name } : a
           );
         }
       );
-      toast.success(`Account updated successfully.`);
+      toast.success(`Category updated successfully.`);
       reset();
       resetAction();
     },
@@ -69,4 +69,4 @@ const useUpdateAccountMutation = (
   });
 };
 
-export default useUpdateAccountMutation;
+export default useUpdateCategoryMutation;

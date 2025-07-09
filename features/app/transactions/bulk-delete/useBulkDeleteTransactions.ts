@@ -17,16 +17,21 @@ const bulkDelete = async (bulkDeleteDto: IBulkDeleteDto) => {
   return response.data;
 };
 
-const useBulkDeleteMutation = (accountId: string) => {
+const useBulkDeleteMutation = (accountId?: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: bulkDelete,
     onSuccess: () => {
       // !FIXME: not quite sure about the paginated data
-      queryClient.invalidateQueries({
-        queryKey: [`${QueryKeys.useGetAccount + "-" + accountId}`],
-      });
+      if (accountId)
+        queryClient.invalidateQueries({
+          queryKey: [`${QueryKeys.useGetAccount + "-" + accountId}`],
+        });
+      else
+        queryClient.invalidateQueries({
+          queryKey: [QueryKeys.useGetTransactions],
+        });
       toast.success("Transactions deleted successfully.");
     },
     onError: (error: AxiosError) => {

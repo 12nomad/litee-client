@@ -44,11 +44,11 @@ function SignUpForm() {
         control={control}
         render={({ field }) => (
           <Input
+            {...field}
             inputId="name"
             label="Name"
             placeholder="name..."
             type="text"
-            {...field}
           />
         )}
       />
@@ -60,11 +60,11 @@ function SignUpForm() {
         control={control}
         render={({ field }) => (
           <Input
+            {...field}
             inputId="email"
             label="Email Address"
             placeholder="email..."
             type="email"
-            {...field}
           />
         )}
       />
@@ -74,11 +74,11 @@ function SignUpForm() {
         control={control}
         render={({ field }) => (
           <Input
+            {...field}
             inputId="password"
             label="Password"
             placeholder="password..."
             type="password"
-            {...field}
           />
         )}
       />
@@ -90,11 +90,11 @@ function SignUpForm() {
         control={control}
         render={({ field }) => (
           <Input
+          {...field}
             inputId="confirmPassword"
             label="Confirm Password"
             placeholder="password..."
             type="password"
-            {...field}
           />
         )}
       />

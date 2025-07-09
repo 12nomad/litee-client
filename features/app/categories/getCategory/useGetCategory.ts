@@ -1,4 +1,4 @@
-import { Account } from "@/features/app/accounts/getAccounts/useGetAccounts";
+import { Category } from "@/features/app/categories/get-categories/useGetCategories";
 import { Transaction } from "@/features/app/transactions/getTransactions/useGetTransactions";
 import { axiosInstance } from "@/features/axios-instance";
 import { endpoints } from "@/features/endpoints";
@@ -6,18 +6,18 @@ import { PaginatedData } from "@/features/interfaces/PaginatedData";
 import { QueryKeys } from "@/features/query-keys";
 import { useQuery } from "@tanstack/react-query";
 
-const getAccount = async (accountId: string) => {
+const getCategory = async (categoryId: string) => {
   const response = await axiosInstance.get(
-    `${endpoints.accounts.getAll}/${accountId}`
+    `${endpoints.categories.getAll}/${categoryId}`
   );
   return response.data;
 };
 
-const useGetAccount = (accountId: string) => {
-  return useQuery<PaginatedData<Transaction[], Account>>({
-    queryFn: () => getAccount(accountId),
-    queryKey: [`${QueryKeys.useGetAccount + "-" + accountId}`],
+const useGetCategory = (categoryId: string) => {
+  return useQuery<PaginatedData<Transaction[], Category>>({
+    queryFn: () => getCategory(categoryId),
+    queryKey: [`${QueryKeys.useGetCategory + "-" + categoryId}`],
   });
 };
 
-export default useGetAccount;
+export default useGetCategory;

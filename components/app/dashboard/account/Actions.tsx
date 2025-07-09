@@ -47,7 +47,10 @@ function Actions({ row }: Props) {
     <div className="text-right flex items-center gap-2">
       <ConfirmDialog />
       <Tooltip>
-        <TooltipTrigger onClick={handleRowEdit}>
+        <TooltipTrigger
+          onClick={handleRowEdit}
+          disabled={deleteTransactionPending}
+        >
           <PencilSquareIcon className="size-4 cursor-pointer text-caribbean" />
         </TooltipTrigger>
         <TooltipContent>

@@ -6,8 +6,9 @@ import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 import { Transaction } from "@/features/app/transactions/getTransactions/useGetTransactions";
 import Button from "@/components/app/shared/Button";
 import Actions from "@/components/app/dashboard/account/Actions";
+import { formatDate, fromMiliUnits } from "@/lib/utils";
 
-export const dataColumns: ColumnDef<Transaction>[] = [
+export const transactionsDataColumns: ColumnDef<Transaction>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -49,14 +50,41 @@ export const dataColumns: ColumnDef<Transaction>[] = [
       );
     },
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
+      const amount = parseFloat(
+        fromMiliUnits(row.getValue("amount"))?.toString()
+      );
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
       }).format(amount);
 
-      return <div>{formatted}</div>;
+      return (
+        <div className={`${amount < 0 ? "text-crimson" : "text-caribbean"}`}>
+          {formatted}
+        </div>
+      );
     },
+  },
+  {
+    accessorKey: "payee",
+    header: "Payee",
+  },
+  {
+    accessorKey: "date",
+    header: "Date",
+    cell: ({ row }) => {
+      const date = formatDate(new Date(row.getValue("date")));
+
+      return <div>{date}</div>;
+    },
+  },
+  {
+    accessorKey: "category.name",
+    header: "Category",
+  },
+  {
+    accessorKey: "account.name",
+    header: "Account",
   },
   {
     accessorKey: "actions",

@@ -18,4 +18,11 @@ export const endpoints = {
     update: "/transactions",
     bulkDelete: "/transactions/bulk-delete",
   },
+  categories: {
+    getAll: "/categories",
+    create: "/categories",
+    delete: "/categories",
+    update: "/categories",
+    bulkDelete: "/categories/bulk-delete",
+  },
 };

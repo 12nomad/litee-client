@@ -10,62 +10,14 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import { Wallet } from "lucide-react";
-import useGetAccounts from "@/features/app/accounts/getAccounts/useGetAccounts";
 
-// const Categories = [
-//   {
-//     id: 100,
-//     label: "Housing",
-//     icon: <HomeIcon className="size-5" />,
-//   },
-//   {
-//     id: 101,
-//     label: "Utilities",
-//     icon: <ShoppingCartIcon className="size-5" />,
-//   },
-//   {
-//     id: 102,
-//     label: "Food",
-//     icon: <CakeIcon className="size-5" />,
-//   },
-//   {
-//     id: 103,
-//     label: "Transportation",
-//     icon: <PaperAirplaneIcon className="size-5" />,
-//   },
-// ];
+interface Props {
+  data: { id: number; name: string; userId: number }[];
+  type: "accounts" | "categories";
+}
 
-// const Accounts = [
-//   {
-//     id: 200,
-//     label: "Account 100",
-//   },
-//   {
-//     id: 201,
-//     label: "Account 101",
-//   },
-//   {
-//     id: 202,
-//     label: "Account 102",
-//   },
-// ];
-
-// interface Props {
-//   type: "accounts" | "categories";
-//   title: string;
-//   data: {
-//     id: number;
-//     label: string;
-//     icon: ReactNode;
-//   }[];
-// }
-
-type TMenu = "accounts" | "categories";
-const type: TMenu = "accounts";
-
-function DashboardSubMenu() {
+function DashboardSubMenu({ data, type }: Props) {
   const pathname = usePathname();
-  const { data } = useGetAccounts();
 
   const getClassName = (value: string) =>
     cn(
@@ -81,7 +33,7 @@ function DashboardSubMenu() {
       <Accordion type="multiple" defaultValue={["item-1"]}>
         <AccordionItem value="item-1">
           <AccordionTrigger className="p-0 m-0 text-xs text-white font-bold cursor-pointer hover:no-underline [&>*]:text-white">
-            Accounts
+            {type === "accounts" ? "Accounts" : "Categories"}
           </AccordionTrigger>
           <AccordionContent className="p-0 mt-2">
             {data?.map((el) => (
@@ -94,7 +46,7 @@ function DashboardSubMenu() {
                   }
                   className={
                     type === "accounts"
-                      ? getClassName(el.id.toString())
+                      ? getClassName(el?.id?.toString())
                       : getClassName(el.name.toLowerCase())
                   }
                 >

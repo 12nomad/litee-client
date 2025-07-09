@@ -37,11 +37,11 @@ function SignInForm() {
         control={control}
         render={({ field }) => (
           <Input
+            {...field}
             inputId="email"
             label="Email Address"
             placeholder="email..."
             type="email"
-            {...field}
           />
         )}
       />
@@ -51,12 +51,12 @@ function SignInForm() {
         control={control}
         render={({ field }) => (
           <Input
+            {...field}
             inputId="password"
             label="Password"
             placeholder="password..."
             type="password"
             withForgotPassword
-            {...field}
           />
         )}
       />

@@ -24,10 +24,16 @@ import {
 } from "@/components/ui/table";
 import Button from "@/components/app/shared/Button";
 import Input from "@/components/app/shared/Input";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import useConfirm from "@/features/hooks/useConfirm";
 import CreateTransactionFromButton from "@/components/app/dashboard/transactions/CreateTransactionFromButton";
 import CreateTransactionModal from "@/components/app/dashboard/transactions/CreateTransactionModal";
+import { PaginatedData } from "@/features/interfaces/PaginatedData";
+import { Transaction } from "@/features/app/transactions/getTransactions/useGetTransactions";
 
 type Filters = "description";
 
@@ -37,6 +43,12 @@ interface DataTableProps<TData, TValue> {
   filterKey: Filters;
   handleRowsDelete: (rows: Row<TData>[]) => void;
   isBulkDeleteDisabled: boolean;
+  paginationData: Partial<
+    Pick<
+      PaginatedData<Transaction, null>,
+      "currentPage" | "pageSize" | "totalCount" | "totalPages"
+    >
+  >;
 }
 
 export function DataTable<TData, TValue>({
@@ -44,6 +56,7 @@ export function DataTable<TData, TValue>({
   data,
   filterKey,
   handleRowsDelete,
+  paginationData,
   isBulkDeleteDisabled = false,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -147,9 +160,15 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
 
-      <div className="mt-2 flex-1 text-sm">
-        {table.getFilteredSelectedRowModel().rows.length} of{" "}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
+      <div className="mt-2 flex justify-between items-center w-full">
+        <p className="text-sm">
+          {table.getFilteredSelectedRowModel().rows.length} of{" "}
+          {table.getFilteredRowModel().rows.length} row(s) selected.
+        </p>
+        <p className="text-sm ml-auto">
+          {paginationData.currentPage} of {paginationData.totalPages} page(s)
+        </p>
+        <div></div>
       </div>
 
       <div
@@ -173,16 +192,18 @@ export function DataTable<TData, TValue>({
           <Button
             variant="outline"
             onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
+            // disabled={!table.getCanPreviousPage()}
           >
+            <ChevronLeftIcon className="size-4" />
             Previous
           </Button>
           <Button
             variant="outline"
             onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
+            // disabled={!table.getCanNextPage()}
           >
             Next
+            <ChevronRightIcon className="size-4" />
           </Button>
         </div>
       </div>

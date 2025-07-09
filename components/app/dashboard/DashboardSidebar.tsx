@@ -1,7 +1,7 @@
-import DashboardSubMenu from "@/components/app/dashboard/DashboardSubMenu";
-import DashboardMainMenu from "@/components/app/dashboard/DashboardMainMenu";
 import LiteeFin from "@/components/app/shared/LiteeFin";
+import DashboardMainMenu from "@/components/app/dashboard/DashboardMainMenu";
 import DashboardSidebarSettings from "@/components/app/dashboard/DashboardSidebarSettings";
+import DashboardSubMenues from "@/components/app/dashboard/DashboardSubMenues";
 
 function DashboardSidebar() {
   return (
@@ -12,7 +12,7 @@ function DashboardSidebar() {
           <LiteeFin variant="ligth" />
         </div>
         <DashboardMainMenu />
-        <DashboardSubMenu />
+        <DashboardSubMenues />
       </div>
 
       {/* BOTTOM */}

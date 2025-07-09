@@ -6,23 +6,23 @@ import { AxiosError } from "axios";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
 
-const deleteAccount = async (accountId: number) => {
+const deleteCategory = async (categoryId: number) => {
   const response = await axiosInstance.delete(
-    endpoints.accounts.delete + `/${accountId}`
+    endpoints.categories.delete + `/${categoryId}`
   );
   return response.data;
 };
 
-const useDeleteAccountMutation = (accountId: number) => {
+const useDeleteCategoryMutation = (categoryId: number) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: () => deleteAccount(accountId),
+    mutationFn: () => deleteCategory(categoryId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QueryKeys.useGetAccounts],
+        queryKey: [QueryKeys.useGetCategories],
       });
-      toast.success(`Account deleted successfully.`);
+      toast.success(`Category deleted successfully.`);
       redirect("/dashboard/overview");
     },
     onError: (error: AxiosError) => {
@@ -36,4 +36,4 @@ const useDeleteAccountMutation = (accountId: number) => {
   });
 };
 
-export default useDeleteAccountMutation;
+export default useDeleteCategoryMutation;

@@ -1,6 +1,6 @@
 "use client";
 
-import CreateAccountModal from "@/components/app/dashboard/account/CreateAccountModal";
+import CreateCategoryModal from "@/components/app/dashboard/category/CreateCategoryModal";
 // import Button from "@/components/app/shared/Button";
 import {
   DropdownMenu,
@@ -12,8 +12,8 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import useDeleteAccountMutation from "@/features/app/accounts/deleteAccount/useDeleteAccount";
-import { Account } from "@/features/app/accounts/getAccounts/useGetAccounts";
+import useDeleteCategoryMutation from "@/features/app/categories/deleteCategory/useDeleteCategory";
+import { Category } from "@/features/app/categories/get-categories/useGetCategories";
 import { MODAL_IDS } from "@/features/constants/modals";
 import useConfirm from "@/features/hooks/useConfirm";
 import { useActionStore } from "@/lib/stores/action.store";
@@ -24,17 +24,17 @@ import {
 } from "@heroicons/react/24/outline";
 
 interface Props {
-  accountData: Account | null;
+  categoryData: Category | null;
 }
 
-function AccountHeader({ accountData }: Props) {
+function CategoryHeader({ categoryData }: Props) {
   const [confirm, ConfirmDialog] = useConfirm({
     message:
-      "Are you sure you want to delete this account? All transactions linked to this account will be deleted too.",
-    title: "Delete account?",
+      "Are you sure you want to delete this category? This action cannot be undone.",
+    title: "Delete category?",
   });
-  const { mutateAsync: deleteAccountAsync } = useDeleteAccountMutation(
-    accountData?.id || 0
+  const { mutateAsync: deleteCategoryAsync } = useDeleteCategoryMutation(
+    categoryData?.id || 0
   );
   const { setAction } = useActionStore();
 
@@ -42,8 +42,8 @@ function AccountHeader({ accountData }: Props) {
     setAction({
       isOpen: true,
       isEdit: true,
-      editData: accountData || null,
-      modalId: MODAL_IDS.CREATE_ACCOUNT,
+      editData: categoryData || null,
+      modalId: MODAL_IDS.CREATE_CATEGORY,
     });
   };
 
@@ -51,17 +51,17 @@ function AccountHeader({ accountData }: Props) {
     const canProceed = await confirm();
     if (!canProceed) return;
 
-    await deleteAccountAsync();
+    await deleteCategoryAsync();
   };
 
   return (
     <header>
       <ConfirmDialog />
-      <CreateAccountModal />
+      <CreateCategoryModal />
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-2xl font-bold">{accountData?.name} Account</h1>
-          <p>Transaction history related to this account.</p>
+          <h1 className="text-2xl font-bold">{categoryData?.name} Category</h1>
+          <p>Transaction history related to this category.</p>
         </div>
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger className="cursor-pointer">
@@ -72,17 +72,17 @@ function AccountHeader({ accountData }: Props) {
             align="start"
             side="left"
           >
-            <DropdownMenuLabel>Account Details</DropdownMenuLabel>
+            <DropdownMenuLabel>Category Details</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem onClick={handleEdit}>
-                Edit account
+                Edit category
                 <DropdownMenuShortcut>
                   <PencilSquareIcon className="size-4" />
                 </DropdownMenuShortcut>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleDelete}>
-                Delete account
+                Delete category
                 <DropdownMenuShortcut>
                   <TrashIcon className="size-4" />
                 </DropdownMenuShortcut>
@@ -93,11 +93,11 @@ function AccountHeader({ accountData }: Props) {
         {/* <div className="flex items-center gap-2">
         <Button variant="secondary" rounded onClick={handleEdit}>
           <PencilSquareIcon className="size-5" />
-          <p>Edit account</p>
+          <p>Edit category</p>
         </Button>
         <Button variant="danger" rounded onClick={handleDelete}>
           <TrashIcon className="size-5" />
-          <p>Delete account</p>
+          <p>Delete category</p>
         </Button>
       </div> */}
       </div>
@@ -105,4 +105,4 @@ function AccountHeader({ accountData }: Props) {
   );
 }
 
-export default AccountHeader;
+export default CategoryHeader;

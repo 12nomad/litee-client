@@ -13,7 +13,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useUserStore } from "@/lib/stores/user.store";
 import useLogoutMutation from "@/features/app/authentication/logout/useLogout";
-import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronUpDownIcon,
+  Cog6ToothIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/outline";
 
 function DashboardSidebarSettings() {
   const { user } = useUserStore();
@@ -53,26 +57,18 @@ function DashboardSidebarSettings() {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                Profile
-                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                Billing
-                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
                 Settings
-                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                Keyboard shortcuts
-                <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+                <DropdownMenuShortcut>
+                  <Cog6ToothIcon className="size-4" />
+                </DropdownMenuShortcut>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} disabled={isPending}>
               Log out
-              <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+              <DropdownMenuShortcut>
+                <UserCircleIcon className="size-4" />
+              </DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

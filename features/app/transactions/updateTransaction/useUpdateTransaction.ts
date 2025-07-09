@@ -34,6 +34,9 @@ const useUpdateTransactionMutation = (
       queryClient.invalidateQueries({
         queryKey: [`${QueryKeys.useGetAccount + "-" + data.accountId}`],
       });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetTransactions],
+      });
       toast.success(`Transaction updated successfully.`);
       reset();
       resetAction();

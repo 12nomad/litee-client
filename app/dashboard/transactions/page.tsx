@@ -1,5 +1,7 @@
+import Transactions from "@/components/app/dashboard/transactions/Transactions";
+
 function TransactionsPage() {
-  return <div>TransactionsPage</div>;
+  return <Transactions />;
 }
 
 export default TransactionsPage;
