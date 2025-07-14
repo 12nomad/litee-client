@@ -5,8 +5,8 @@ interface Props {
   children: ReactNode;
 }
 
-const NotificationsLayout = ({ children }: Props) => {
+const FileUploadLayout = ({ children }: Props) => {
   return <DashBoardMainWrapper>{children}</DashBoardMainWrapper>;
 };
 
-export default NotificationsLayout;
+export default FileUploadLayout;

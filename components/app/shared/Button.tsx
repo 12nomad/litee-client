@@ -38,6 +38,7 @@ function Button({
         rounded && "rounded-full"
       } ${disabled && "opacity-60 cursor-not-allowed"}
       `}
+      disabled={disabled}
       {...props}
     >
       {children}

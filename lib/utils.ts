@@ -36,3 +36,21 @@ export const formatToYMD = (dateStr: string) => {
 
   return `${year}-${month}-${day}`;
 };
+
+export const transformDataColumnsToRows = (
+  columns: { name: string; data: string[] }[],
+  accountId: string
+): Record<string, string>[] => {
+  const rowCount = columns[0]?.data.length ?? 0;
+
+  return Array.from({ length: rowCount }, (_, index) => {
+    const row: Record<string, string> = { accountId };
+
+    for (const column of columns) {
+      const key = column.name.toLowerCase();
+      row[key] = column.data[index] ?? "";
+    }
+
+    return row;
+  });
+};

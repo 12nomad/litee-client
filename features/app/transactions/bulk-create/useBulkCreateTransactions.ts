@@ -5,23 +5,25 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 
-interface IBulkDeleteDto {
-  transactionIds: number[];
+interface IBulkCreateDto {
+  [key: string]: string | number;
 }
 
-const bulkDelete = async (bulkDeleteDto: IBulkDeleteDto) => {
+const bulkCreate = async (bulkCreateDto: {
+  transactions: IBulkCreateDto[];
+}) => {
   const response = await axiosInstance.post(
-    endpoints.transactions.bulkDelete,
-    bulkDeleteDto
+    endpoints.transactions.bulkCreate,
+    bulkCreateDto
   );
   return response.data;
 };
 
-const useBulkDeleteMutation = () => {
+const useBulkCreateMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: bulkDelete,
+    mutationFn: bulkCreate,
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetTransactions],
@@ -32,7 +34,7 @@ const useBulkDeleteMutation = () => {
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetCategory],
       });
-      toast.success("Transactions deleted successfully.");
+      toast.success("Transactions created successfully.");
     },
     onError: (error: AxiosError) => {
       if (
@@ -44,4 +46,4 @@ const useBulkDeleteMutation = () => {
   });
 };
 
-export default useBulkDeleteMutation;
+export default useBulkCreateMutation;

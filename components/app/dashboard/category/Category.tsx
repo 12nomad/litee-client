@@ -14,7 +14,7 @@ interface Props {
 
 function Category({ categoryId }: Props) {
   const { data: transactions, isLoading } = useGetCategory(categoryId);
-  const { mutateAsync, isPending } = useBulkDeleteMutation(categoryId);
+  const { mutateAsync, isPending } = useBulkDeleteMutation();
 
   const handleRowsDelete = (row: Row<Transaction>[]) => {
     const ids = row.map((r) => r.original.id);
