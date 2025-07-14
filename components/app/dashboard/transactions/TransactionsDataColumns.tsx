@@ -6,7 +6,7 @@ import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 import { Transaction } from "@/features/app/transactions/getTransactions/useGetTransactions";
 import Button from "@/components/app/shared/Button";
 import Actions from "@/components/app/dashboard/account/Actions";
-import { formatDate, fromMiliUnits } from "@/lib/utils";
+import { formatToLocaleDate, fromMiliUnits } from "@/lib/utils";
 
 export const transactionsDataColumns: ColumnDef<Transaction>[] = [
   {
@@ -73,7 +73,7 @@ export const transactionsDataColumns: ColumnDef<Transaction>[] = [
     accessorKey: "date",
     header: "Date",
     cell: ({ row }) => {
-      const date = formatDate(new Date(row.getValue("date")));
+      const date = formatToLocaleDate(new Date(row.getValue("date")));
 
       return <div>{date}</div>;
     },

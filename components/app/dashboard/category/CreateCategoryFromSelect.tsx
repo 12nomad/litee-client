@@ -1,3 +1,7 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import Button from "@/components/app/shared/Button";
 import Input from "@/components/app/shared/Input";
 import {
@@ -5,18 +9,20 @@ import {
   createCategorySchema,
 } from "@/features/app/categories/create-category/createCategory.schema";
 import useCreateCategoryMutation from "@/features/app/categories/create-category/useCreateCategory";
-import { Category } from "@/features/app/transactions/getTransactions/useGetTransactions";
+import { Category } from "@/features/app/categories/get-categories/useGetCategories";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
 
 interface Props {
   categories: Category[] | undefined;
+  accountId?: string;
+  categoryId?: string;
 }
 
-const CreateCategoryFromSelect = ({ categories }: Props) => {
+const CreateCategoryFromSelect = ({
+  categories,
+  accountId,
+  categoryId,
+}: Props) => {
   const {
     control,
     formState: { errors },
@@ -30,7 +36,7 @@ const CreateCategoryFromSelect = ({ categories }: Props) => {
     },
   });
   const { mutateAsync: createCategory, isPending: isCreateCategoryPending } =
-    useCreateCategoryMutation(reset);
+    useCreateCategoryMutation(reset, accountId, categoryId);
 
   useEffect(() => {
     if (errors.name?.message) toast.error(`${errors.name?.message}.`);

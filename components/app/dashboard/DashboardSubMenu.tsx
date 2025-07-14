@@ -22,8 +22,9 @@ function DashboardSubMenu({ data, type }: Props) {
   const getClassName = (value: string) =>
     cn(
       "flex items-center gap-2 h-8",
-      pathname === `/dashboard/categories/${value}` ||
-        pathname === `/dashboard/accounts/${value}`
+      (type === "categories" &&
+        pathname === `/dashboard/categories/${value}`) ||
+        (type === "accounts" && pathname === `/dashboard/accounts/${value}`)
         ? "relative text-white bg-white/10 rounded-r-xs before:content-[''] before:w-1 before:h-8 before:bg-white before:rounded-xs before:block before:relative"
         : "text-white/60"
     );
@@ -42,16 +43,16 @@ function DashboardSubMenu({ data, type }: Props) {
                   href={
                     type === "accounts"
                       ? `/dashboard/accounts/${el.id}`
-                      : `/dashboard/categories/${el.name.toLowerCase()}`
+                      : `/dashboard/categories/${el.id}`
                   }
                   className={
                     type === "accounts"
                       ? getClassName(el?.id?.toString())
-                      : getClassName(el.name.toLowerCase())
+                      : getClassName(el?.id?.toString())
                   }
                 >
                   <Wallet className="size-5" />
-                  <span className="text-sm font-medium">{el.name}</span>
+                  <p className="text-sm font-medium truncate">{el.name}</p>
                 </Link>
               </div>
             ))}

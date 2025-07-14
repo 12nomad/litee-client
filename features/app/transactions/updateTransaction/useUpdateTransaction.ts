@@ -32,10 +32,13 @@ const useUpdateTransactionMutation = (
       editTransaction(dto, transactionId),
     onSuccess: (data: Transaction) => {
       queryClient.invalidateQueries({
-        queryKey: [`${QueryKeys.useGetAccount + "-" + data.accountId}`],
+        queryKey: [QueryKeys.useGetTransactions],
       });
       queryClient.invalidateQueries({
-        queryKey: [QueryKeys.useGetTransactions],
+        queryKey: [QueryKeys.useGetAccount, data.accountId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetCategory, data.categoryId],
       });
       toast.success(`Transaction updated successfully.`);
       reset();

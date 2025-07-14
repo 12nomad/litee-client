@@ -16,6 +16,7 @@ import CurrencyInputComponent, {
 
 interface Props {
   value: string;
+  name: string;
   onValueChange: (
     value: string | undefined,
     name?: string,
@@ -28,6 +29,7 @@ interface Props {
 function CurrencyInput({
   onValueChange,
   value,
+  name,
   disabled = false,
   placeholder = "$0.00",
 }: Props) {
@@ -88,12 +90,13 @@ function CurrencyInput({
       </Tooltip>
 
       <CurrencyInputComponent
+        name={name}
         prefix="$"
         className="block w-full p-2 ps-4 text-black rounded-lg text-sm border-black focus:outline-caribbean border"
         placeholder={placeholder}
         decimalsLimit={2}
         decimalScale={2}
-        onValueChange={onValueChange}
+        onValueChange={(value) => onValueChange(value || "")}
         disabled={disabled}
         value={value}
       />

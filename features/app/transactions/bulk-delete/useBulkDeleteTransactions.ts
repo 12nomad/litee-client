@@ -26,7 +26,7 @@ const useBulkDeleteMutation = (accountId?: string) => {
       // !FIXME: not quite sure about the paginated data
       if (accountId)
         queryClient.invalidateQueries({
-          queryKey: [`${QueryKeys.useGetAccount + "-" + accountId}`],
+          queryKey: [QueryKeys.useGetAccount, accountId],
         });
       else
         queryClient.invalidateQueries({

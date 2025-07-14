@@ -36,7 +36,7 @@ const useUpdateCategoryMutation = (
     mutationFn: (dto: ICreateCategoryDto) => updateCategory(dto, categoryId),
     onSuccess: (data: Category) => {
       queryClient.setQueryData(
-        [`${QueryKeys.useGetCategory + "-" + categoryId}`],
+        [QueryKeys.useGetCategory, categoryId],
         (prev: PaginatedData<Transaction[], Category>) => {
           return {
             ...prev,
@@ -55,6 +55,12 @@ const useUpdateCategoryMutation = (
           );
         }
       );
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetTransactions],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetAccount],
+      });
       toast.success(`Category updated successfully.`);
       reset();
       resetAction();

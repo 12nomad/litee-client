@@ -14,9 +14,15 @@ import { toast } from "sonner";
 
 interface Props {
   accounts: Account[] | undefined;
+  accountId?: string;
+  categoryId?: string;
 }
 
-const CreateAccountFromSelect = ({ accounts }: Props) => {
+const CreateAccountFromSelect = ({
+  accounts,
+  accountId,
+  categoryId,
+}: Props) => {
   const {
     control,
     formState: { errors },
@@ -30,7 +36,7 @@ const CreateAccountFromSelect = ({ accounts }: Props) => {
     },
   });
   const { mutateAsync: createAccount, isPending: isCreateAccountPending } =
-    useCreateAccountMutation(reset);
+    useCreateAccountMutation(reset, accountId, categoryId);
 
   useEffect(() => {
     if (errors.name?.message) toast.error(`${errors.name?.message}.`);

@@ -22,6 +22,12 @@ const useDeleteCategoryMutation = (categoryId: number) => {
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetCategories],
       });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetTransactions],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetAccount],
+      });
       toast.success(`Category deleted successfully.`);
       redirect("/dashboard/overview");
     },

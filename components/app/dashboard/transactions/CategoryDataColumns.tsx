@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 import { Transaction } from "@/features/app/transactions/getTransactions/useGetTransactions";
 import Button from "@/components/app/shared/Button";
-import { formatDate, fromMiliUnits } from "@/lib/utils";
+import { formatToLocaleDate, fromMiliUnits } from "@/lib/utils";
 import Actions from "@/components/app/dashboard/account/Actions";
 
 export const categoryDataColumns: ColumnDef<Transaction>[] = [
@@ -58,7 +58,11 @@ export const categoryDataColumns: ColumnDef<Transaction>[] = [
         currency: "USD",
       }).format(amount);
 
-      return <div>{formatted}</div>;
+      return (
+        <div className={`${amount < 0 ? "text-crimson" : "text-caribbean"}`}>
+          {formatted}
+        </div>
+      );
     },
   },
   {
@@ -69,14 +73,14 @@ export const categoryDataColumns: ColumnDef<Transaction>[] = [
     accessorKey: "date",
     header: "Date",
     cell: ({ row }) => {
-      const date = formatDate(new Date(row.getValue("date")));
+      const date = formatToLocaleDate(new Date(row.getValue("date")));
 
       return <div>{date}</div>;
     },
   },
   {
-    accessorKey: "category.name",
-    header: "Category",
+    accessorKey: "account.name",
+    header: "Account",
   },
   {
     accessorKey: "actions",

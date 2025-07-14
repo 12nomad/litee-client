@@ -1,5 +1,4 @@
 import { CreateCategoryFormValues } from "@/features/app/categories/create-category/createCategory.schema";
-import { Category } from "@/features/app/transactions/getTransactions/useGetTransactions";
 import { axiosInstance } from "@/features/axios-instance";
 import { endpoints } from "@/features/endpoints";
 import { QueryKeys } from "@/features/query-keys";
@@ -17,19 +16,27 @@ const createCategory = async (createCategoryDto: CreateCategoryFormValues) => {
 };
 
 const useCreateCategoryMutation = (
-  reset: UseFormReset<CreateCategoryFormValues>
+  reset: UseFormReset<CreateCategoryFormValues>,
+  accountId?: string,
+  categoryId?: string
 ) => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: createCategory,
-    onSuccess: (data: Category) => {
-      queryClient.setQueryData(
-        [QueryKeys.useGetCategories],
-        (prev: Category[]) => {
-          return [...prev, data];
-        }
-      );
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetCategories],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetTransactions],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetAccount, accountId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetCategory, categoryId],
+      });
       toast.success(`Category created successfully.`);
       reset();
     },

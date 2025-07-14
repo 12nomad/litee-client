@@ -1,3 +1,5 @@
+import { Account } from "@/features/app/accounts/getAccounts/useGetAccounts";
+import { Category } from "@/features/app/categories/get-categories/useGetCategories";
 import { axiosInstance } from "@/features/axios-instance";
 import { endpoints } from "@/features/endpoints";
 import { PaginatedData } from "@/features/interfaces/PaginatedData";
@@ -13,6 +15,8 @@ export interface Transaction {
   accountId: number;
   categoryId: number;
   userId: number;
+  category: Category;
+  account: Account;
 }
 
 const getTransactions = async () => {

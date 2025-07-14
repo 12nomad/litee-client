@@ -37,7 +37,7 @@ import CreateCategoryFromSelect from "@/components/app/dashboard/category/Create
 import DatePicker from "@/components/app/shared/DatePicker";
 import CurrencyInput from "@/components/app/shared/CurrencyInput";
 import { useEffect, useState } from "react";
-import { fromMiliUnits, toDateOnly, toMiliUnits } from "@/lib/utils";
+import { formatToYMD, fromMiliUnits, toMiliUnits } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import useGetAccounts from "@/features/app/accounts/getAccounts/useGetAccounts";
 import CreateAccountFromSelect from "@/components/app/dashboard/account/CreateAccountFromSelect";
@@ -63,6 +63,7 @@ function CreateTransactionModal() {
     formState: { errors },
     reset,
     setValue,
+    getValues,
   } = useForm<CreateTransactionFormValues>({
     resolver: zodResolver(createTransactionSchema),
     defaultValues: {
@@ -71,7 +72,7 @@ function CreateTransactionModal() {
       accountId: accountId,
       payee: "",
       categoryId: "",
-      date: new Date().toISOString(),
+      date: "",
     },
   });
   const {
@@ -103,18 +104,13 @@ function CreateTransactionModal() {
     if (isEdit) {
       setValue(
         "amount",
-        editData?.amount ? fromMiliUnits(+editData.amount)?.toString() : ""
+        editData?.amount ? fromMiliUnits(editData.amount)?.toString() : ""
       );
       setValue("description", editData?.description || "");
       setValue("payee", editData?.payee || "");
       setValue("categoryId", editData?.categoryId?.toString() || "");
       setValue("accountId", editData?.accountId?.toString() || "");
-      setValue(
-        "date",
-        editData?.date
-          ? new Date(editData.date).toISOString()
-          : new Date().toISOString()
-      );
+      setValue("date", editData?.date || "");
     }
   }, [isEdit]);
 
@@ -128,7 +124,7 @@ function CreateTransactionModal() {
       accountId: data.accountId,
       amount: toMiliUnits(+data.amount)?.toString(),
       description: data.description,
-      date: toDateOnly(data.date),
+      date: formatToYMD(data.date),
       payee: data.payee,
       categoryId: data.categoryId,
     });
@@ -230,7 +226,11 @@ function CreateTransactionModal() {
                       </SelectGroup>
                       <SelectSeparator />
                       <SelectGroup className="w-full">
-                        <CreateCategoryFromSelect categories={categories} />
+                        <CreateCategoryFromSelect
+                          categories={categories}
+                          accountId={getValues("accountId")}
+                          categoryId={getValues("categoryId")}
+                        />
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -270,7 +270,11 @@ function CreateTransactionModal() {
                       </SelectGroup>
                       <SelectSeparator />
                       <SelectGroup className="w-full">
-                        <CreateAccountFromSelect accounts={accounts} />
+                        <CreateAccountFromSelect
+                          accounts={accounts}
+                          accountId={getValues("accountId")}
+                          categoryId={getValues("categoryId")}
+                        />
                       </SelectGroup>
                     </SelectContent>
                   </Select>

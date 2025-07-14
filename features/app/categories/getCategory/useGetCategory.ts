@@ -16,7 +16,7 @@ const getCategory = async (categoryId: string) => {
 const useGetCategory = (categoryId: string) => {
   return useQuery<PaginatedData<Transaction[], Category>>({
     queryFn: () => getCategory(categoryId),
-    queryKey: [`${QueryKeys.useGetCategory + "-" + categoryId}`],
+    queryKey: [QueryKeys.useGetCategory, categoryId],
   });
 };
 

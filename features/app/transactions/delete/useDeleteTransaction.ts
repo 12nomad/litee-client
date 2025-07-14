@@ -14,7 +14,8 @@ const deleteTransaction = async (transactionId: number) => {
 
 const useDeleteTransactionMutation = (
   transactionId: number,
-  accountId: number
+  accountId?: number,
+  categoryId?: number
 ) => {
   const queryClient = useQueryClient();
 
@@ -23,7 +24,13 @@ const useDeleteTransactionMutation = (
     onSuccess: () => {
       // !FIXME: not quite sure about the paginated data
       queryClient.invalidateQueries({
-        queryKey: [`${QueryKeys.useGetAccount + "-" + accountId}`],
+        queryKey: [QueryKeys.useGetTransactions],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetAccount, accountId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetCategory, categoryId],
       });
       toast.success("Transactions deleted successfully.");
     },

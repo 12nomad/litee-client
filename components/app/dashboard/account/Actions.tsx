@@ -20,7 +20,11 @@ function Actions({ row }: Props) {
   const {
     mutateAsync: deleteTransactionMutation,
     isPending: deleteTransactionPending,
-  } = useDeleteTransactionMutation(row.original.id, row.original.accountId);
+  } = useDeleteTransactionMutation(
+    row.original.id,
+    row.original.accountId,
+    row.original.categoryId
+  );
   const [confirm, ConfirmDialog] = useConfirm({
     message:
       "Are you sure you want to delete this transaction? This action cannot be undone.",

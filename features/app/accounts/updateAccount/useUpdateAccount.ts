@@ -36,7 +36,7 @@ const useUpdateAccountMutation = (
     mutationFn: (dto: ICreateAccountDto) => updateAccount(dto, accountId),
     onSuccess: (data: Account) => {
       queryClient.setQueryData(
-        [`${QueryKeys.useGetAccount + "-" + accountId}`],
+        [QueryKeys.useGetAccount, accountId],
         (prev: PaginatedData<Transaction[], Account>) => {
           return {
             ...prev,
@@ -55,6 +55,12 @@ const useUpdateAccountMutation = (
           );
         }
       );
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetTransactions],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetCategory],
+      });
       toast.success(`Account updated successfully.`);
       reset();
       resetAction();

@@ -22,6 +22,12 @@ const useDeleteAccountMutation = (accountId: number) => {
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetAccounts],
       });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetTransactions],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetCategory],
+      });
       toast.success(`Account deleted successfully.`);
       redirect("/dashboard/overview");
     },

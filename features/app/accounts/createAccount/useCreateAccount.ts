@@ -17,7 +17,9 @@ const createAccount = async (createAccountDto: CreateAccountFormValues) => {
 };
 
 const useCreateAccountMutation = (
-  reset: UseFormReset<CreateAccountFormValues>
+  reset: UseFormReset<CreateAccountFormValues>,
+  accountId?: string,
+  categoryId?: string
 ) => {
   const queryClient = useQueryClient();
   const { resetAction } = useActionStore();
@@ -27,6 +29,15 @@ const useCreateAccountMutation = (
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetAccounts],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetTransactions],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetAccount, accountId],
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QueryKeys.useGetCategory, categoryId],
       });
       toast.success(`Account created successfully.`);
       reset();
