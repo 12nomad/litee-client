@@ -25,10 +25,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { toMiliUnits, transformDataColumnsToRows } from "@/lib/utils";
+import {
+  formatToYMD,
+  isValidDateAndFormat,
+  toMiliUnits,
+  transformDataColumnsToRows,
+} from "@/lib/utils";
 import useGetAccounts from "@/features/app/accounts/getAccounts/useGetAccounts";
 import CreateAccountFromSelect from "@/components/app/dashboard/account/CreateAccountFromSelect";
 import useBulkCreateMutation from "@/features/app/transactions/bulk-create/useBulkCreateTransactions";
+import { toast } from "sonner";
 
 interface ImportResult {
   data: string[][];
@@ -45,11 +51,8 @@ enum ValidHeaders {
 
 interface SelectedHeader {
   name: string;
+  index: number;
   data: string[];
-}
-
-interface Dto {
-  [key: string]: string;
 }
 
 function UploadArea() {
@@ -60,14 +63,8 @@ function UploadArea() {
   const [tableBody, setTableBody] = useState<string[][]>([]);
   const [selectedHeader, setSelectedHeader] = useState<SelectedHeader[]>([]);
   const [selectedHeaders, setSelectedHeaders] = useState<string[]>([]);
-  const [dto, setDto] = useState<Dto[]>([]);
   const { CSVReader } = useCSVReader();
   const { mutateAsync, isPending, isSuccess } = useBulkCreateMutation();
-
-  useEffect(() => {
-    if (selectedHeader.length > 3)
-      setDto(transformDataColumnsToRows(selectedHeader, accountId));
-  }, [selectedHeader, accountId]);
 
   useEffect(() => {
     if (!isPending && isSuccess) handleCancelFileUpload();
@@ -87,7 +84,6 @@ function UploadArea() {
     setTableBody([]);
     setSelectedHeader([]);
     setSelectedHeaders([]);
-    setDto([]);
     setAccountId("");
   };
 
@@ -108,20 +104,52 @@ function UploadArea() {
         {
           name: value,
           data: tableBody.map((arr) => arr[idx]),
+          index: idx,
         },
       ]);
     } else {
-      setSelectedHeader((prev) => prev.filter((h, i) => i !== idx));
+      setSelectedHeader((prev) => {
+        return prev.filter((h) => h.index !== idx);
+      });
     }
   };
 
   const handleCreateBulkTransactions = async () => {
-    const data = dto.map((el) => ({
-      ...el,
-      amount: toMiliUnits(el.amount ? +el.amount : 0),
-      accountId: +el.accountId,
-    }));
-    await mutateAsync({ transactions: data });
+    const dto = transformDataColumnsToRows(selectedHeader, accountId);
+
+    const validatedData = dto
+      .filter((el) => {
+        if (!el.date) return true;
+
+        const amountNum = Number(el.amount);
+        const validAmount = !isNaN(amountNum);
+        const validDate = isValidDateAndFormat(el.date);
+        return validAmount && validDate;
+      })
+      .map((el) => {
+        if (!el.date)
+          return {
+            ...el,
+            amount: toMiliUnits(+el.amount),
+            accountId: +el.accountId,
+            date: formatToYMD(new Date().toString()),
+          };
+
+        return {
+          ...el,
+          amount: toMiliUnits(+el.amount),
+          accountId: +el.accountId,
+        };
+      });
+
+    if (validatedData.length === 0) {
+      toast.error(
+        "Invalid inputs. Please review the Amount or the Date column to match the correct data type."
+      );
+      return;
+    }
+
+    await mutateAsync({ transactions: validatedData });
   };
 
   if (importResult !== null) {
@@ -182,7 +210,9 @@ function UploadArea() {
                                   .filter((v, i) => i !== idx && v !== "Skip")
                                   .includes(h)}
                               >
-                                {h}
+                                {h === ValidHeaders.Date
+                                  ? `${h} (YYYY-MM-DD)`
+                                  : h}
                               </SelectItem>
                             ))}
                             <SelectItem value="Skip">Skip</SelectItem>
@@ -244,11 +274,13 @@ function UploadArea() {
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                   <PlusCircleIcon className="size-8 mb-4 text-gray-500" />
                   <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                    <span className="font-semibold">Click to add CSV file</span>
+                    <span className="font-semibold">
+                      Click to add a CSV file
+                    </span>
                   </p>
                   <p className="text-xs text-gray-500 dark:text-gray-400">
                     The CSV file must have the following fields: Description,
-                    Amount, Payee, Date
+                    Amount, Payee, Date (YYYY-MM-DD)
                   </p>
                 </div>
                 <input

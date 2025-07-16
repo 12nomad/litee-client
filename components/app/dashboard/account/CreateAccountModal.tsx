@@ -48,10 +48,7 @@ function CreateAccountModal() {
     useUpdateAccountMutation(reset, editData?.id || 0);
 
   useEffect(() => {
-    if (isEdit) {
-      console.log("editData => ", editData);
-      setValue("name", editData?.name ? editData?.name : "");
-    }
+    if (isEdit) setValue("name", editData?.name ? editData?.name : "");
   }, [isEdit]);
 
   const handleResetModal = () => {

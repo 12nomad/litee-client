@@ -6,4 +6,5 @@ export const QueryKeys = {
   useGetTransactions: "transactions",
   useGetCategories: "categories",
   useGetCategory: "category",
+  useGetReports: "reports",
 };

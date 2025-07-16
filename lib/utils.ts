@@ -38,19 +38,57 @@ export const formatToYMD = (dateStr: string) => {
 };
 
 export const transformDataColumnsToRows = (
-  columns: { name: string; data: string[] }[],
+  selectedHeader: { name: string; index: number; data: string[] }[],
   accountId: string
-): Record<string, string>[] => {
-  const rowCount = columns[0]?.data.length ?? 0;
+): {
+  description: string;
+  amount: string;
+  payee: string;
+  date: string;
+  accountId: string;
+}[] => {
+  if (!selectedHeader.length) return [];
 
-  return Array.from({ length: rowCount }, (_, index) => {
-    const row: Record<string, string> = { accountId };
-
-    for (const column of columns) {
-      const key = column.name.toLowerCase();
-      row[key] = column.data[index] ?? "";
-    }
-
-    return row;
+  // Map selected header names to their column index
+  const headerIndexMap: { [key: string]: number } = {};
+  selectedHeader.forEach((header) => {
+    headerIndexMap[header.name] = header.index;
   });
+
+  // Build row objects from tableBody using selected indices
+  return (
+    // Find the max number of rows in tableBody
+    selectedHeader[0]?.data.map((_, rowIdx) => {
+      return {
+        description:
+          selectedHeader.find((h) => h.name === "Description")?.data[rowIdx] ??
+          "",
+        payee:
+          selectedHeader.find((h) => h.name === "Payee")?.data[rowIdx] ?? "",
+        amount:
+          selectedHeader.find((h) => h.name === "Amount")?.data[rowIdx] ?? "",
+        date: selectedHeader.find((h) => h.name === "Date")?.data[rowIdx] ?? "",
+        accountId: accountId ?? "",
+      };
+    }) ?? []
+  );
+};
+
+export const isValidDateAndFormat = (dateStr: string): boolean => {
+  const extracted = dateStr.match(/\d{4}-\d{2}-\d{2}/)?.[0];
+  if (!extracted) return false;
+
+  const matchesFormat = /^\d{4}-\d{2}-\d{2}$/.test(extracted);
+  if (!matchesFormat) return false;
+
+  const parsed = new Date(extracted);
+  const isReal = !isNaN(parsed.getTime());
+
+  const [year, month, day] = extracted.split("-").map(Number);
+  return (
+    parsed.getUTCFullYear() === year &&
+    parsed.getUTCMonth() + 1 === month &&
+    parsed.getUTCDate() === day &&
+    isReal
+  );
 };

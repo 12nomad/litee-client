@@ -26,4 +26,7 @@ export const endpoints = {
     update: "/categories",
     bulkDelete: "/categories/bulk-delete",
   },
+  reports: {
+    getAll: "/reports",
+  },
 };
