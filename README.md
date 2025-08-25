@@ -1,4 +1,4 @@
-# 🛍️ Litee Fin.
+# 💳 Litee Fin.
 
 Personnal finance management tool
 
