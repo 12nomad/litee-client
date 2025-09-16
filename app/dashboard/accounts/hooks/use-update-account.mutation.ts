@@ -16,8 +16,10 @@ interface ICreateAccountDto {
 
 const updateAccount = async (
   createAccountDto: ICreateAccountDto,
-  accountId: number
+  accountId?: number
 ) => {
+  if (!accountId) return toast.error("Invalid operation: missing accountId.");
+
   const response = await axiosInstance.put(
     endpoints.accounts.update + `/${accountId}`,
     createAccountDto
@@ -27,7 +29,7 @@ const updateAccount = async (
 
 const useUpdateAccountMutation = (
   reset: UseFormReset<ICreateAccountDto>,
-  accountId: number
+  accountId?: number
 ) => {
   const queryClient = useQueryClient();
   const { resetAction } = useActionStore();

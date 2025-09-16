@@ -36,7 +36,11 @@ const CreateAccountFromSelect = ({
     },
   });
   const { mutateAsync: createAccount, isPending: isCreateAccountPending } =
-    useCreateAccountMutation(reset, accountId, categoryId);
+    useCreateAccountMutation(
+      reset,
+      accountId ? +accountId : undefined,
+      categoryId ? +categoryId : undefined
+    );
 
   useEffect(() => {
     if (errors.name?.message) toast.error(`${errors.name?.message}.`);

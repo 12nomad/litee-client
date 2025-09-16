@@ -16,8 +16,10 @@ interface ICreateCategoryDto {
 
 const updateCategory = async (
   createCategoryDto: ICreateCategoryDto,
-  categoryId: number
+  categoryId?: number
 ) => {
+  if (!categoryId) return toast.error("Invalid operation: missing categoryId.");
+
   const response = await axiosInstance.put(
     endpoints.categories.update + `/${categoryId}`,
     createCategoryDto
@@ -27,7 +29,7 @@ const updateCategory = async (
 
 const useUpdateCategoryMutation = (
   reset: UseFormReset<ICreateCategoryDto>,
-  categoryId: number
+  categoryId?: number
 ) => {
   const queryClient = useQueryClient();
   const { resetAction } = useActionStore();

@@ -45,7 +45,7 @@ function CreateAccountModal() {
   const { mutateAsync: createAccount, isPending: isCreateAccountPending } =
     useCreateAccountMutation(reset);
   const { mutateAsync: updateAccount, isPending: isUpdateAccountPending } =
-    useUpdateAccountMutation(reset, editData?.id || 0);
+    useUpdateAccountMutation(reset, editData?.id);
 
   useEffect(() => {
     if (isEdit) setValue("name", editData?.name ? editData?.name : "");

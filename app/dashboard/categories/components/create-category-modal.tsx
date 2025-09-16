@@ -48,7 +48,7 @@ function CreateCategoryModal() {
   const { mutateAsync: createCategory, isPending: isCreateCategoryPending } =
     useCreateCategoryMutation(reset);
   const { mutateAsync: updateCategory, isPending: isUpdateCategoryPending } =
-    useUpdateCategoryMutation(reset, editData?.id || 0);
+    useUpdateCategoryMutation(reset, editData?.id);
 
   useEffect(() => {
     if (isEdit) {

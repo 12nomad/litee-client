@@ -17,8 +17,8 @@ const createCategory = async (createCategoryDto: CreateCategoryFormValues) => {
 
 const useCreateCategoryMutation = (
   reset: UseFormReset<CreateCategoryFormValues>,
-  accountId?: string,
-  categoryId?: string
+  accountId?: number,
+  categoryId?: number
 ) => {
   const queryClient = useQueryClient();
 
@@ -31,12 +31,14 @@ const useCreateCategoryMutation = (
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetTransactions],
       });
-      queryClient.invalidateQueries({
-        queryKey: [QueryKeys.useGetAccount, accountId],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [QueryKeys.useGetCategory, categoryId],
-      });
+      if (accountId)
+        queryClient.invalidateQueries({
+          queryKey: [QueryKeys.useGetAccount, accountId],
+        });
+      if (categoryId)
+        queryClient.invalidateQueries({
+          queryKey: [QueryKeys.useGetCategory, categoryId],
+        });
       toast.success(`Category created successfully.`);
       reset();
     },

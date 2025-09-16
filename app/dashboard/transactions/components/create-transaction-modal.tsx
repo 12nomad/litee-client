@@ -14,7 +14,7 @@ import {
 import { Transaction } from "@/app/dashboard/transactions/hooks/use-get-transactions.query";
 import { MODAL_IDS } from "@/constants/modals";
 import useGetCategories from "@/app/dashboard/categories/hooks/use-get-categories.query";
-import useCreateTransactionMutation from "@/app/dashboard/transactions/hooks/use-create-transaction";
+import useCreateTransactionMutation from "@/app/dashboard/transactions/hooks/use-create-transaction.mutation";
 import useUpdateTransactionMutation from "@/app/dashboard/transactions/hooks/use-update-transaction.mutation";
 import useGetAccountsQuery from "@/app/dashboard/accounts/hooks/use-get-accounts.query";
 import CreateCategoryFromSelect from "@/app/dashboard/categories/components/create-category-from-select";

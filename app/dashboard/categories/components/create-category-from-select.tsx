@@ -36,7 +36,11 @@ const CreateCategoryFromSelect = ({
     },
   });
   const { mutateAsync: createCategory, isPending: isCreateCategoryPending } =
-    useCreateCategoryMutation(reset, accountId, categoryId);
+    useCreateCategoryMutation(
+      reset,
+      accountId ? +accountId : undefined,
+      categoryId ? +categoryId : undefined
+    );
 
   useEffect(() => {
     if (errors.name?.message) toast.error(`${errors.name?.message}.`);

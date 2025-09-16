@@ -26,12 +26,14 @@ const useDeleteTransactionMutation = (
       queryClient.invalidateQueries({
         queryKey: [QueryKeys.useGetTransactions],
       });
-      queryClient.invalidateQueries({
-        queryKey: [QueryKeys.useGetAccount, accountId],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [QueryKeys.useGetCategory, categoryId],
-      });
+      if (accountId)
+        queryClient.invalidateQueries({
+          queryKey: [QueryKeys.useGetAccount, accountId],
+        });
+      if (categoryId)
+        queryClient.invalidateQueries({
+          queryKey: [QueryKeys.useGetCategory, categoryId],
+        });
       toast.success("Transactions deleted successfully.");
     },
     onError: (error: AxiosError) => {
