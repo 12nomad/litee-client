@@ -34,7 +34,6 @@ function AuthenticationLayout({ children }: Props) {
                   className="w-[80%] mx-auto object-contain"
                   priority
                 />
-                {/* !FIXME: change this description */}
                 <div className="text-center">
                   <h2 className="text-lg font-bold">
                     Take Charge of Your Finances with Ease!

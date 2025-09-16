@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Quicksand, Lobster_Two } from "next/font/google";
 
 import "./globals.css";
-import RQProvider from "@/lib/react-query/RQProvider";
+import RQProvider from "@/lib/react-query/react-query.provider";
 import { Toaster } from "@/components/ui/sonner";
 
 const quicksand = Quicksand({

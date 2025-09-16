@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import { format, subDays } from "date-fns";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -91,4 +92,23 @@ export const isValidDateAndFormat = (dateStr: string): boolean => {
     parsed.getUTCDate() === day &&
     isReal
   );
+};
+
+export const formatDates = ({
+  from,
+  to,
+}: {
+  from?: string | Date;
+  to?: string | Date;
+}) => {
+  const dateFormat = "LLL dd, y";
+  if (!from)
+    return `${format(subDays(new Date(), 30), dateFormat)} - ${format(
+      new Date(),
+      dateFormat
+    )}`;
+
+  if (to) return `${format(from, dateFormat)} - ${format(to, dateFormat)}`;
+
+  return format(from, dateFormat);
 };

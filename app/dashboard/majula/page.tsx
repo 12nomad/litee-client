@@ -1,5 +1,5 @@
 function MajulaPage() {
-  return <div>MajulaPage</div>;
+  return <div>Majula</div>;
 }
 
 export default MajulaPage;

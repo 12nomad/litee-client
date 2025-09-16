@@ -1,9 +1,9 @@
+import Link from "next/link";
 import Image from "next/image";
-import Button from "@/components/app/shared/Button";
+import SignInForm from "@/app/authentication/sign-in/components/sign-in-form";
+import Button from "@/components/shared/button";
 import Google from "@/public/assets/google.png";
 // import Github from "@/public/assets/github.png";
-import Link from "next/link";
-import SignInForm from "@/components/app/authentication/SignInForm";
 
 function SignInPage() {
   return (
@@ -31,7 +31,9 @@ function SignInPage() {
         </p>
         <div className="w-full h-[1px] bg-black/40 rounded-lg"></div>
       </div>
+
       <SignInForm />
+
       <p className="text-sm font-medium mt-8">
         Don&apos;t have an account yet?{" "}
         <Link href={"/authentication/sign-up"}>

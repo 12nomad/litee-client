@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import DashBoardMainWrapper from "@/components/app/dashboard/DashBoardMainWrapper";
+import DashBoardMainWrapper from "@/app/dashboard/components/dashboard-main-wrapper";
 
 interface Props {
   children: ReactNode;

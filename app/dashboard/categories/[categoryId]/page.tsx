@@ -1,4 +1,4 @@
-import Category from "@/components/app/dashboard/category/Category";
+import Category from "@/app/dashboard/categories/[categoryId]/components/category";
 
 interface Props {
   params: {
@@ -10,7 +10,7 @@ async function DashboardCategoriePage({ params }: Props) {
   const routeParams = await params;
   const categoryId = routeParams.categoryId;
 
-  return <Category categoryId={categoryId} />;
+  return <Category categoryId={+categoryId} />;
 }
 
 export default DashboardCategoriePage;

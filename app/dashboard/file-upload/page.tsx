@@ -1,4 +1,4 @@
-import FileUpload from "@/components/app/dashboard/file-upload/FileUpload";
+import FileUpload from "@/app/dashboard/file-upload/components/file-upload";
 
 function FileUploadPage() {
   return <FileUpload />;
