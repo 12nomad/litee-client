@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "@/lib/axios/axios-instance";
 import { Category } from "@/app/dashboard/categories/hooks/use-get-categories.query";
 import { Transaction } from "@/app/dashboard/transactions/hooks/use-get-transactions.query";
-import { PaginatedData } from "@/interfaces/PaginatedData";
+import { PaginatedData } from "@/interfaces/paginated-data";
 import { endpoints } from "@/constants/endpoints";
 import { QueryKeys } from "@/constants/query-keys";
 

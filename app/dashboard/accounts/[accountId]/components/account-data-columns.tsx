@@ -53,9 +53,9 @@ export const accountDataColumns: ColumnDef<Transaction>[] = [
       const amount = parseFloat(
         fromMiliUnits(row.getValue("amount"))?.toString()
       );
-      const formatted = new Intl.NumberFormat("en-US", {
+      const formatted = new Intl.NumberFormat("fr-FR", {
         style: "currency",
-        currency: "USD",
+        currency: "EUR",
       }).format(amount);
 
       return (

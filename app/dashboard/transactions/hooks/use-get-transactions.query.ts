@@ -4,7 +4,7 @@ import { QueryKeys } from "@/constants/query-keys";
 import { endpoints } from "@/constants/endpoints";
 import { Category } from "@/app/dashboard/categories/hooks/use-get-categories.query";
 import { Account } from "@/app/dashboard/accounts/hooks/use-get-accounts.query";
-import { PaginatedData } from "@/interfaces/PaginatedData";
+import { PaginatedData } from "@/interfaces/paginated-data";
 
 export interface Transaction {
   id: number;

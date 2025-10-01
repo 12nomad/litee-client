@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionStore } from "@/lib/stores/action.store";
-import { TypedActionStore } from "@/interfaces/TypedActionStore";
+import { TypedActionStore } from "@/interfaces/typed-action-store";
 import { formatToYMD, fromMiliUnits, toMiliUnits } from "@/lib/utils";
 import {
   CreateTransactionFormValues,
@@ -72,7 +72,7 @@ function CreateTransactionModal() {
       accountId: accountId,
       payee: "",
       categoryId: "",
-      date: "",
+      date: new Date().toString(),
     },
   });
   const {

@@ -8,7 +8,7 @@ import { Transaction } from "@/app/dashboard/transactions/hooks/use-get-transact
 import { useActionStore } from "@/lib/stores/action.store";
 import { endpoints } from "@/constants/endpoints";
 import { QueryKeys } from "@/constants/query-keys";
-import { PaginatedData } from "@/interfaces/PaginatedData";
+import { PaginatedData } from "@/interfaces/paginated-data";
 
 interface ICreateCategoryDto {
   name: string;

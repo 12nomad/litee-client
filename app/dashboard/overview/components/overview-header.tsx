@@ -11,13 +11,13 @@ function OverviewHeader() {
   return (
     <div className="flex justify-between items-center mb-4">
       {!isPending && !isLoading && data && data?.length > 0 ? (
-        <h1 className="text-xl font-bold text-caribbean">
+        <h1 className="text-xl font-bold">
           Welcome in, <span className="capitalize">{user?.username}</span>
         </h1>
       ) : (
         <>
           <div>
-            <h1 className="text-xl font-bold text-caribbean capitalize">
+            <h1 className="text-xl font-bold capitalize">
               Welcome in, {user?.username}
             </h1>
             {/* <p className="text-black/70">This is your financial overview report</p> */}

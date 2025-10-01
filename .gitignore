@@ -44,3 +44,6 @@ next-env.d.ts
 test.sql
 test.csv
 test.js
+new-rule.md
+new-assistant.yaml
+new-assistant-*.yaml

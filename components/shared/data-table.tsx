@@ -26,7 +26,7 @@ import {
   ChevronRightIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
-import { PaginatedData } from "@/interfaces/PaginatedData";
+import { PaginatedData } from "@/interfaces/paginated-data";
 import { Transaction } from "@/app/dashboard/transactions/hooks/use-get-transactions.query";
 import useConfirm from "@/components/shared/hooks/useConfirm";
 import CreateTransactionFromButton from "@/app/dashboard/transactions/components/create-transaction-from-button";

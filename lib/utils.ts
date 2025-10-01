@@ -103,7 +103,7 @@ export const formatDates = ({
 }) => {
   const dateFormat = "LLL dd, y";
   if (!from)
-    return `${format(subDays(new Date(), 30), dateFormat)} - ${format(
+    return `${format(subDays(new Date(), 29), dateFormat)} - ${format(
       new Date(),
       dateFormat
     )}`;

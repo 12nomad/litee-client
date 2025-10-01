@@ -7,7 +7,7 @@ import { axiosInstance } from "@/lib/axios/axios-instance";
 import { Account } from "@/app/dashboard/accounts/hooks/use-get-accounts.query";
 import { Transaction } from "@/app/dashboard/transactions/hooks/use-get-transactions.query";
 import { endpoints } from "@/constants/endpoints";
-import { PaginatedData } from "@/interfaces/PaginatedData";
+import { PaginatedData } from "@/interfaces/paginated-data";
 import { QueryKeys } from "@/constants/query-keys";
 
 interface ICreateAccountDto {

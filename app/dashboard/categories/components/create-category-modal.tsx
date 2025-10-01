@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useActionStore } from "@/lib/stores/action.store";
-import { TypedActionStore } from "@/interfaces/TypedActionStore";
+import { TypedActionStore } from "@/interfaces/typed-action-store";
 import { MODAL_IDS } from "@/constants/modals";
 import { Category } from "@/app/dashboard/categories/hooks/use-get-categories.query";
 import useCreateCategoryMutation from "@/app/dashboard/categories/hooks/use-create-category.mutation";
@@ -38,9 +38,6 @@ function CreateCategoryModal() {
     setValue,
   } = useForm<CreateCategoryFormValues>({
     resolver: zodResolver(createCategorySchema),
-    defaultValues: {
-      name: "",
-    },
     values: {
       name: isEdit ? editData!.name : "",
     },
