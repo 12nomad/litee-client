@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { cn, fromMiliUnits } from "@/lib/utils";
+import { cn, formatCurrency, fromMiliUnits } from "@/lib/utils";
 import {
   ArrowLongDownIcon,
   ArrowLongUpIcon,
@@ -47,10 +47,7 @@ const DataCard = ({
       </CardHeader>
       <CardContent>
         <h3 className="font-bold text-2xl mb-2 break-all">
-          {new Intl.NumberFormat("fr-FR", {
-            style: "currency",
-            currency: "EUR",
-          }).format(fromMiliUnits(value))}
+          {formatCurrency(fromMiliUnits(value))}
         </h3>
         <div className="text-sm flex items-center gap-1">
           <p

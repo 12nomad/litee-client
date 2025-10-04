@@ -269,7 +269,7 @@ function UploadArea() {
             <div className="flex items-center justify-center w-full">
               <label
                 htmlFor="dropzone-file"
-                className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer"
+                className="flex flex-col items-center justify-center w-full h-[calc(100vh-150px)] border-2 border-gray-300 border-dashed rounded-lg cursor-pointer"
               >
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
                   <PlusCircleIcon className="size-8 mb-4 text-gray-500" />

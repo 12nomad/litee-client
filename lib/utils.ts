@@ -75,6 +75,14 @@ export const transformDataColumnsToRows = (
   );
 };
 
+export const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat("fr-FR", {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 2,
+  }).format(amount);
+};
+
 export const isValidDateAndFormat = (dateStr: string): boolean => {
   const extracted = dateStr.match(/\d{4}-\d{2}-\d{2}/)?.[0];
   if (!extracted) return false;

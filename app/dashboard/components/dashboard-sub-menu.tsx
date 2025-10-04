@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Wallet } from "lucide-react";
+import { Wallet, Tags } from "lucide-react";
 import {
   Accordion,
   AccordionItem,
@@ -51,7 +51,11 @@ function DashboardSubMenu({ data, type }: Props) {
                       : getClassName(el?.id?.toString())
                   }
                 >
-                  <Wallet className="size-5" />
+                  {type === "accounts" ? (
+                    <Wallet className="size-5" />
+                  ) : (
+                    <Tags className="size-5" />
+                  )}
                   <p className="text-sm font-medium truncate">{el.name}</p>
                 </Link>
               </div>

@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ArrowsUpDownIcon } from "@heroicons/react/24/outline";
 import { Transaction } from "@/app/dashboard/transactions/hooks/use-get-transactions.query";
-import { formatToLocaleDate, fromMiliUnits } from "@/lib/utils";
+import { formatCurrency, formatToLocaleDate, fromMiliUnits } from "@/lib/utils";
 import Button from "@/components/shared/button";
 import Actions from "@/components/shared/actions";
 
@@ -53,10 +53,7 @@ export const categoryDataColumns: ColumnDef<Transaction>[] = [
       const amount = parseFloat(
         fromMiliUnits(row.getValue("amount"))?.toString()
       );
-      const formatted = new Intl.NumberFormat("fr-FR", {
-        style: "currency",
-        currency: "EUR",
-      }).format(amount);
+      const formatted = formatCurrency(amount);
 
       return (
         <div className={`${amount < 0 ? "text-crimson" : "text-caribbean"}`}>

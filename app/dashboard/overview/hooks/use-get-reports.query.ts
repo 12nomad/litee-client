@@ -4,8 +4,8 @@ import { endpoints } from "@/constants/endpoints";
 import { QueryKeys } from "@/constants/query-keys";
 import { fromMiliUnits } from "@/lib/utils";
 
-interface FinanceSummary {
-  categoryKey?: number;
+export interface FinanceSummary {
+  categoryKey?: string;
   dateKey?: string;
   income?: number;
   expense?: number;
